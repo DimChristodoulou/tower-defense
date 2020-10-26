@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour{
     private GameObject _killedEnemiesPanel;
     private Dictionary<EnemyScriptableObject, int> _killedEnemies = new Dictionary<EnemyScriptableObject, int>();
     private int _selectedTowerIndex = -1;
-    private bool _isTowerSelected;
+    private bool _isTowerSelected = false;
 
     public Dictionary<EnemyScriptableObject, int> KilledEnemies
     {
@@ -63,25 +63,25 @@ public class GameManager : MonoBehaviour{
             _isTowerSelected = true;
             _selectedTowerIndex = 0;
         }
-        else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["buildArcaneTowerBinding"]) &&
-                 TowerInformation[1].cost < gold){
+        else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["buildArcaneTowerBinding"]) && TowerInformation[1].cost < gold){
             _isTowerSelected = true;
             _selectedTowerIndex = 1;
         }
-        else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["buildSupportTowerBinding"]) &&
-                 TowerInformation[2].cost < gold){
+        else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["buildSupportTowerBinding"]) && TowerInformation[2].cost < gold){
             _isTowerSelected = true;
             _selectedTowerIndex = 2;
         }
-        else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["speedx1"]))
+        else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["buildEarthquakeTowerBinding"]) && TowerInformation[3].cost < gold){
+            _isTowerSelected = true;
+            _selectedTowerIndex = 3;
+        }
+        else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["speedx1"])){
             Time.timeScale = 1f;
+        }
         else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["speedx2"])){
             Time.timeScale = 2f;
         }
-        else{
-            if (!Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["speedx3"]))
-                return;
-
+        else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["speedx3"])){
             Time.timeScale = 3f;
         }
     }

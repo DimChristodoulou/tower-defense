@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tower", menuName = "ScriptableObjects/TowerData", order = 1)]
@@ -14,16 +15,27 @@ public class TowerData : ScriptableObject
 {
     public const int ARROW_TOWER = 0;
     public const int ARCANE_TOWER = 1;
+    public const int SUPPORT_TOWER = 2;
+    public const int EARTHQUAKE_TOWER = 3;
+    
+    [Title("Core Values")]
     public int id;
+    public string pathToResource;
+    
+    [Title("Modifiable Values")]
     public int cost;
-    public int numberOfLevelups;
-    public int level;
     public float damage;
     public float firingRate;
     public float range;
-    public string pathToResource;
+
+    [Title("Conditional Tower Properties")]
     public bool isAreaTower;
     public bool isSupportTower;
+    public bool canHitFlyingEnemies;
+    
+    [Title("Level-Up Related Values")]
+    public int currentLevel;
     [SerializeField]
     public List<LevelUpData> towerLevelUps;
+    
 }

@@ -18,20 +18,37 @@ public class EnemySpawn : MonoBehaviour{
 
     private void Update(){ }
 
-    public IEnumerator SpawnEnemy(WaveManager.WaveEnemies enemyWave){
+    public IEnumerator SpawnEnemy(WaveManager.WaveEnemies enemyWave, bool isEndless = false){
         bool controlVar = true;
 
-        while (controlVar){
-            if (activeEnemyCount < enemyWave.waveEnemyCount){
-                Vector3 position = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
-                Instantiate(enemyWave.enemiesList[Random.Range(0, enemyWave.enemiesList.Count)], new Vector3(position.x, position.y, 0.0f),
-                    Quaternion.identity);
-                ++activeEnemyCount;
-            }
-            else if (activeEnemyCount == enemyWave.waveEnemyCount)
-                controlVar = false;
+        if (!isEndless){
+            while (controlVar){
+                if (activeEnemyCount < enemyWave.waveEnemyCount){
+                    Vector3 position = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
+                    Instantiate(enemyWave.enemiesList[Random.Range(0, enemyWave.enemiesList.Count)], new Vector3(position.x, position.y, 0.0f),
+                        Quaternion.identity);
+                    ++activeEnemyCount;
+                }
+                else if (activeEnemyCount == enemyWave.waveEnemyCount)
+                    controlVar = false;
 
-            yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(2f);
+            }
+        }
+        else{
+            while (controlVar){
+                int sizeOfWave = Random.Range(0, 100);
+                if (activeEnemyCount < sizeOfWave){
+                    Vector3 position = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
+                    Instantiate(enemyWave.enemiesList[Random.Range(0, enemyWave.enemiesList.Count)], new Vector3(position.x, position.y, 0.0f),
+                        Quaternion.identity);
+                    ++activeEnemyCount;
+                }
+                else if (activeEnemyCount == sizeOfWave)
+                    controlVar = false;
+
+                yield return new WaitForSeconds(2f);
+            }
         }
 
         activeEnemyCount = 0;

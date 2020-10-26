@@ -21,20 +21,21 @@ public class ConstructionPoint : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (!_manager.IsTowerSelected || _isOccupied)
-            return;
-        ConstructTower();
+        if (_manager.IsTowerSelected && !_isOccupied){
+            ConstructTower();
+        }
     }
 
     private void ConstructTower()
     {
-        GameObject original = Resources.Load(_manager.TowerInformation[_manager.SelectedTowerIndex].pathToResource) as GameObject;
-        if (original != null && original.GetComponent<Tower>().towerData.cost > _manager.gold)
-            return;
-        _manager.RemoveGold(original.GetComponent<Tower>().towerData.cost);
-        Instantiate(original, transform.position, Quaternion.identity);
-        _manager.IsTowerSelected = false;
-        _manager.SelectedTowerIndex = -1;
-        _isOccupied = true;
+        GameObject original = Resources.Load<GameObject>(_manager.TowerInformation[_manager.SelectedTowerIndex].pathToResource);
+        
+        if (original != null && original.GetComponent<Tower>().towerData.cost <= _manager.gold){
+            _manager.RemoveGold(original.GetComponent<Tower>().towerData.cost);
+            Instantiate(original, transform.position, Quaternion.identity);
+            _manager.IsTowerSelected = false;
+            _manager.SelectedTowerIndex = -1;
+            _isOccupied = true;
+        }
     }
 }

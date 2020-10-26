@@ -21,6 +21,9 @@ public class Settings : MonoBehaviour{
             "buildSupportTowerBinding",
             KeyCode.S
         }, {
+            "buildEarthquakeTowerBinding",
+            KeyCode.E
+        }, {
             "speedx1",
             KeyCode.Alpha1
         }, {
@@ -40,7 +43,7 @@ public class Settings : MonoBehaviour{
     private Text _buttonLabel;
 
     private void Start(){
-        _settingsWindow = GameObject.Find(nameof(Settings));
+        _settingsWindow = GameObject.Find("Settings");
         _settingsWindow.SetActive(false);
         _pauseMenu = GameObject.Find("PauseMenu");
         _pauseMenu.SetActive(false);

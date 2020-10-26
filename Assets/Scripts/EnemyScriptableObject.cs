@@ -4,16 +4,51 @@
 // MVID: A28AF8C8-695A-49DE-887A-AA1AA02D690F
 // Assembly location: E:\Tower_Defense_Builds\14-10-2020\Tower Defense_Data\Managed\Assembly-CSharp.dll
 
+using System;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace Enemies{
+    public enum HealingValue {FlatValue, Percentage}
+    
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObjects/Enemy", order = 0)]
     public class EnemyScriptableObject : ScriptableObject{
-        public int id;
-        public string name;
+        [Required] public int id;
+        [Required] public string name;
+        public string itemDrop;
+        
+        [Title("Modifiable Properties")]
+        [ValidateInput("CantBeZero", "This field cannot be zero")]
         public float maxHealth;
         public float speed;
         public int goldValue;
-        public string itemDrop;
+
+        [Title("Conditional Enemy Properties")]
+        public bool isFlying;
+        public bool isHealer;
+
+        [DetailedInfoBox("A monster with the healer attribute restores a portion of the health of nearby monsters", "" +
+                                "Healing Percentage determines how much health per monster will be restored (percentile - mutually exclusive with Healing Percentage)\n" +
+                                "\n"+
+                                "Healing Value determines how much health per monster will be restored (flat value - mutually exclusive with Healing Percentage)\n" +
+                                "\n"+
+                                "Healing Cooldown determines how frequently the healing will occur in seconds\n" +
+                                "\n"+
+                                "Healing Range determines what area around the healer is caught in the healing effect")]
+        
+        [Title("Healer Parameters")]
+        [ShowIf("isHealer")]
+        [EnumToggleButtons]
+        public HealingValue healing;
+        
+        [ShowIf("@this.isHealer && this.healing == HealingValue.FlatValue")] public float healingFlatValue;
+        [ShowIf("@this.isHealer && this.healing == HealingValue.Percentage")] public float healingPercentage;
+        [ShowIf("isHealer")] public float healingCooldown;
+        [ShowIf("isHealer")] public float healingRange;
+
+
+        private bool CantBeZero(float field){
+            return Math.Abs(field) > 0f;
+        }
     }
 }

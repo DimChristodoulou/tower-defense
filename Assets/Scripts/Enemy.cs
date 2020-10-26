@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    public float currentHealth;
+    private float currentHealth;
     public Image healthBar;
     public EnemyScriptableObject enemyData;
     public StringLiterals.singularItemDrops drops;
@@ -33,6 +33,10 @@ public class Enemy : MonoBehaviour
     {
         _manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         currentHealth = enemyData.maxHealth;
+
+        if (enemyData.isHealer){
+            InvokeRepeating("healTargets", 0.0f, enemyData.healingCooldown);
+        }
     }
 
     private void Update()
@@ -46,6 +50,28 @@ public class Enemy : MonoBehaviour
         if (currentHealth > 0.0)
             return;
         KillEnemy();
+    }
+    
+    public void gainHealth(float value)
+    {
+        currentHealth += value;
+
+        if (currentHealth > enemyData.maxHealth){
+            currentHealth = enemyData.maxHealth;
+        }
+
+        healthBar.fillAmount = currentHealth / enemyData.maxHealth;
+    }
+    
+    public void gainHealthPercentage(float percentage)
+    {
+        currentHealth += enemyData.maxHealth * percentage;
+
+        if (currentHealth > enemyData.maxHealth){
+            currentHealth = enemyData.maxHealth;
+        }
+
+        healthBar.fillAmount = currentHealth / enemyData.maxHealth;
     }
 
     private void KillEnemy()
@@ -64,5 +90,28 @@ public class Enemy : MonoBehaviour
         _manager.KilledEnemies[gameObject.GetComponent<Enemy>().enemyData]++;
         _manager.AddGold(enemyData.goldValue);
         Destroy(gameObject);
+    }
+    
+    /*
+     * Healer Functionality
+     */
+    private void healTargets(){
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemyData.speed = 0;
+        
+        foreach (GameObject enemy in enemies){
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+
+            if (distanceToEnemy < enemyData.healingRange){
+                if (enemyData.healing == HealingValue.FlatValue){
+                    enemy.GetComponent<Enemy>().gainHealth(enemyData.healingFlatValue);
+                }
+                else{
+                    enemy.GetComponent<Enemy>().gainHealthPercentage(enemyData.healingPercentage);
+                }
+            }
+        }
+        
+        enemyData.speed = 1.5f;
     }
 }

@@ -7,13 +7,36 @@
 public static class StringLiterals{
     public const string LifeText = "Lives: ";
     public const string GoldText = "GOLD: ";
+    
+    
     public const string WarTurtleDrop = "War Turtle Shell";
     public const string GoblinDrop = "Goblin Ear";
     public const string SpiderDrop = "Spider Leg";
+    public const string WaspDrop = "Wasp Sting";
+    public const string CultistDrop = "Cultist Mana Essence";
 
     public enum singularItemDrops{
         WarTurtleDrop,
         GoblinDrop,
-        SpiderDrop
+        SpiderDrop,
+        WaspDrop,
+        CultistDrop
+    }
+
+    public static string monsterDropToString(singularItemDrops drop){
+        switch (drop){
+            case singularItemDrops.WarTurtleDrop:
+                return WarTurtleDrop;
+            case singularItemDrops.GoblinDrop:
+                return GoblinDrop;
+            case singularItemDrops.SpiderDrop:
+                return SpiderDrop;
+            case singularItemDrops.WaspDrop:
+                return WaspDrop;
+            case singularItemDrops.CultistDrop:
+                return CultistDrop;
+            default:
+                return null;
+        }
     }
 }
