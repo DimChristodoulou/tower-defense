@@ -21,8 +21,7 @@ MonoBehaviour:
   isAreaTower: 0
   isSupportTower: 1
   canHitFlyingEnemies: 0
-  numberOfLevelups: 1
-  level: 0
+  currentLevel: 0
   towerLevelUps:
   - damage: 0.6
     firingRate: 0

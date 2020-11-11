@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   name: War Turtle
-  maxHealth: 300
+  itemDrop: War Turtle Shell
+  maxHealth: 60
   speed: 1
   goldValue: 50
-  itemDrop: War Turtle Shell
+  isFlying: 0
+  isHealer: 0
+  healing: 0
+  healingFlatValue: 0
+  healingPercentage: 0
+  healingCooldown: 0
+  healingRange: 0

@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour
     private float currentHealth;
     public Image healthBar;
     public EnemyScriptableObject enemyData;
-    public StringLiterals.singularItemDrops drops;
     private GameManager _manager;
 
     public float CurrentHealth
@@ -89,6 +88,7 @@ public class Enemy : MonoBehaviour
 
         _manager.KilledEnemies[gameObject.GetComponent<Enemy>().enemyData]++;
         _manager.AddGold(enemyData.goldValue);
+        _manager.activeEnemies--;
         Destroy(gameObject);
     }
     

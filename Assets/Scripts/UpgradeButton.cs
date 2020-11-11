@@ -13,7 +13,7 @@ using UnityEngine.UI;
 public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IEventSystemHandler, IPointerExitHandler
 {
     private GameObject tooltipPanel;
-    private TextMeshProUGUI name, flavor, description, costText;
+    private TextMeshProUGUI name, flavor, description, costText, prerequisitesText, mutuallyExclusiveText;
     public UpgradeScriptableObject upgrade;
 
     private void Awake()
@@ -22,6 +22,8 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IEventSystemHa
         name = GameObject.Find("NameText").GetComponent<TextMeshProUGUI>();
         flavor = GameObject.Find("FlavourText").GetComponent<TextMeshProUGUI>();
         description = GameObject.Find("DescriptionText").GetComponent<TextMeshProUGUI>();
+        prerequisitesText = GameObject.Find("PrerequisitesText").GetComponent<TextMeshProUGUI>();
+        mutuallyExclusiveText = GameObject.Find("MutuallyExclusiveText").GetComponent<TextMeshProUGUI>();
         costText = GameObject.Find("CostsText").GetComponent<TextMeshProUGUI>();
     }
 
@@ -38,7 +40,6 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IEventSystemHa
     public void showUpgradeTooltip()
     {
         tooltipPanel.SetActive(true);
-        tooltipPanel.transform.position = Input.mousePosition + new Vector3(150f, 150f, 0.0f);
         name.text = upgrade.name;
         flavor.text = upgrade.flavourDescription;
         description.text = upgrade.description;
@@ -47,11 +48,83 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IEventSystemHa
         foreach (KeyValuePair<StringLiterals.singularItemDrops, int> cost in upgrade.costs){
             costText.text += cost.Value + " " + StringLiterals.monsterDropToString(cost.Key) + "\n";
         }
+        
+        bool canPurchase = isUpgradePurchasable();
+
+        if (canPurchase){
+            costText.color = Color.green;
+        }
+        
+        if (upgrade.hasPrerequisites){
+            string prereqText = "";
+            
+            foreach (UpgradeScriptableObject prerequisite in upgrade.prerequisites){
+                prereqText += prerequisite.name + " ";
+            }
+            
+            prerequisitesText.text = prereqText + " must be unlocked first";
+        }
+        else{
+            prerequisitesText.text = "";
+        }
+
+        if (upgrade.isMutuallyExclusiveWithOtherSkills){
+            string mutuallyExclusiveStr = "";
+            
+            foreach (UpgradeScriptableObject exclusiveSkill in upgrade.mutuallyExclusiveSkills){
+                mutuallyExclusiveStr += exclusiveSkill.name + " ";
+            }
+            
+            mutuallyExclusiveText.text = "You cannot have " + upgrade.name + " together with " + mutuallyExclusiveStr;
+        }
+        else{
+            mutuallyExclusiveText.text = "";
+        }
     }
 
-    public void UnlockUpgrade(){
-        GlobalPlayerProgress.UnlockedUpgrades.Add(upgrade.id);
-        PlayerProgress currentPlayerProgress = new PlayerProgress();
-        currentPlayerProgress.saveProgress();
+    public void CheckAndUnlockUpgrade(){
+        bool areAllPrerequisitesUnlocked = true;
+        
+        if (upgrade.hasPrerequisites){
+
+            foreach (UpgradeScriptableObject prerequisite in upgrade.prerequisites){
+                if (!prerequisite.isUnlocked){
+                    areAllPrerequisitesUnlocked = false;
+                }
+            }
+        }
+        Debug.Log("test");
+        if (areAllPrerequisitesUnlocked){
+            UnlockUpgradeIfNotUnlocked();
+        }
+    }
+
+    private void UnlockUpgradeIfNotUnlocked(){
+        if (!upgrade.isUnlocked){
+            Debug.Log("test2");
+            bool canPurchase = isUpgradePurchasable();
+            
+            if (canPurchase){
+                Debug.Log("test3");
+                upgrade.isUnlocked = true;
+                gameObject.GetComponent<Image>().sprite = upgrade.UpgradeIcon;
+                GlobalPlayerProgress.UnlockedUpgrades.Add(upgrade);
+                Debug.Log("test4");
+                PlayerProgress currentPlayerProgress = new PlayerProgress();
+                currentPlayerProgress.saveProgress();
+            }
+        }
+    }
+
+    private bool isUpgradePurchasable(){
+        bool canPurchase = true;
+        foreach (KeyValuePair<StringLiterals.singularItemDrops, int> drops in upgrade.costs){
+            if (!GlobalPlayerProgress.playerDrops.ContainsKey(drops.Key) || GlobalPlayerProgress.playerDrops[drops.Key] < drops.Value){
+                //Player hasn't collected all the necessary resources so he can't purchase the upgrade
+                canPurchase = false;
+            }
+        }
+
+        return canPurchase;
     }
 }

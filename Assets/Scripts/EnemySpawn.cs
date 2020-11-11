@@ -6,33 +6,44 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour{
     public List<GameObject> spawnPoints;
     public List<GameObject> waypoints;
-    public int activeEnemyCount;
     private WaveManager _waveManager;
+    private GameManager _gameManager;
 
-    private void Start() => _waveManager = gameObject.GetComponent<WaveManager>();
+    private void Start(){
+        _waveManager = gameObject.GetComponent<WaveManager>();
+        _gameManager = gameObject.GetComponent<GameManager>();
+    }
 
     private void Update(){ }
 
-    public IEnumerator SpawnEnemy(WaveManager.WaveEnemies enemyWave, bool isEndless = false){
+    public IEnumerator SpawnRandomEnemy(WaveManagerScriptableObject.Wave wave, bool isEndless = false){
+        int activeEnemyCount = 0;
         bool controlVar = true;
 
         if (!isEndless){
             while (controlVar){
-                if (activeEnemyCount < enemyWave.waveEnemyCount){
+                if (activeEnemyCount < wave.waveEnemyCount){
                     Vector3 position = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
-                    Instantiate(enemyWave.enemiesList[Random.Range(0, enemyWave.enemiesList.Count)], new Vector3(position.x, position.y, 0.0f),
-                        Quaternion.identity);
+
+                    //IF TIMER IS 20 AND WAVE HAS 10 ENEMIES WITH 2 SECOND SPAWN INTERVAL, SMTH LIKE A TIMING BUG OCCURS
+                    Instantiate(wave.EnemiesList[Random.Range(0, wave.EnemiesList.Count)], 
+                                new Vector3(position.x, position.y, 0.0f), 
+                                        Quaternion.identity);
+
+                    ++_gameManager.activeEnemies;
                     ++activeEnemyCount;
                 }
-                else if (activeEnemyCount == enemyWave.waveEnemyCount)
+                else if (activeEnemyCount == wave.waveEnemyCount){
                     controlVar = false;
+                }
 
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(wave.enemySpawnInterval);
             }
         }
         else{
@@ -40,7 +51,7 @@ public class EnemySpawn : MonoBehaviour{
                 int sizeOfWave = Random.Range(0, 100);
                 if (activeEnemyCount < sizeOfWave){
                     Vector3 position = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
-                    Instantiate(enemyWave.enemiesList[Random.Range(0, enemyWave.enemiesList.Count)], new Vector3(position.x, position.y, 0.0f),
+                    Instantiate(wave.EnemiesList[Random.Range(0, wave.EnemiesList.Count)], new Vector3(position.x, position.y, 0.0f),
                         Quaternion.identity);
                     ++activeEnemyCount;
                 }
@@ -50,7 +61,26 @@ public class EnemySpawn : MonoBehaviour{
                 yield return new WaitForSeconds(2f);
             }
         }
+        
+    }
 
-        activeEnemyCount = 0;
+    public IEnumerator SpawnSpecificEnemies(WaveManagerScriptableObject.Wave wave){
+        int activeEnemyCount = 0;
+        bool controlVar = true;
+        
+        Vector3 position = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
+        
+        for (int i = 0; i < wave.EnemiesList.Count; i++){
+            for (int j = 0; j < wave.enemiesWeightOrNumber[i]; j++){
+                Instantiate(wave.EnemiesList[i], 
+                    new Vector3(position.x, position.y, 0.0f), 
+                    Quaternion.identity);
+                
+                ++_gameManager.activeEnemies;
+                ++activeEnemyCount;
+                
+                yield return new WaitForSeconds(wave.enemySpawnInterval);
+            }
+        }
     }
 }

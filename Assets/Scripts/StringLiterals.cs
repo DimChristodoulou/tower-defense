@@ -4,9 +4,11 @@
 // MVID: A28AF8C8-695A-49DE-887A-AA1AA02D690F
 // Assembly location: E:\Tower_Defense_Builds\14-10-2020\Tower Defense_Data\Managed\Assembly-CSharp.dll
 
+using System.Collections.Generic;
+
 public static class StringLiterals{
     public const string LifeText = "Lives: ";
-    public const string GoldText = "GOLD: ";
+    public const string GoldText = "Gold: ";
     
     
     public const string WarTurtleDrop = "War Turtle Shell";
@@ -22,6 +24,14 @@ public static class StringLiterals{
         WaspDrop,
         CultistDrop
     }
+    
+    public static List<string> drops = new List<string>(){
+        "War Turtle Shell",
+        "Goblin Ear",
+        "Spider Leg",
+        "Wasp Sting",
+        "Cultist Mana Essence"
+    };
 
     public static string monsterDropToString(singularItemDrops drop){
         switch (drop){

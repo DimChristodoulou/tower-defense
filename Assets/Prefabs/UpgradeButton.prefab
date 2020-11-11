@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2729483969615023933}
   m_Layer: 0
   m_Name: UpgradeButton
-  m_TagString: Untagged
+  m_TagString: Upgrade Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,7 +117,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4289879174712941755}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7596045602170347267, guid: 314ea7b3636effe478b7f1c76206f1cc,
+          type: 3}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2729483969615023933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +142,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77dd7e0dd23b78a47b066784bb698784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipPanel: {fileID: 5305832287068223144, guid: f02644ccd2f81ac48b23e324a7942bf8,
-    type: 3}
   upgrade: {fileID: 0}

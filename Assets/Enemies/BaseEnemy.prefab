@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -96,10 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7f3b1c3dfc46b4ebfc17af4e00e31b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
   healthBar: {fileID: 6914484073087371465}
   enemyData: {fileID: 0}
-  drops: 1
 --- !u!114 &8941653536323070635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +242,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!114 &6914484072393414602
 MonoBehaviour:
@@ -284,7 +282,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!1 &6914484073087371467
 GameObject:
   m_ObjectHideFlags: 0

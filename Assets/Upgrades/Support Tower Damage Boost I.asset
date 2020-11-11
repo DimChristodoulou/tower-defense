@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f130c6eabe98ba41842885f0a06a0bd, type: 3}
-  m_Name: Tower Damage I
+  m_Name: Support Tower Damage Boost I
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -40,28 +40,16 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
       Data: 1
-    - Name: $v
-      Entry: 3
-      Data: 50
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 3
-      Data: 2
+      Data: 4
     - Name: $v
       Entry: 3
-      Data: 100
+      Data: 400
     - Name: 
       Entry: 8
       Data: 
@@ -71,9 +59,22 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: 0
-  name: Arrow Tower Damage I
-  description: Increases Arrow Tower damage by 5%
-  flavourDescription: Your arrows are pointier
-  UpgradeIcon: {fileID: 21300000, guid: 73bdb305dd9359842878587bf2ebb747, type: 3}
+  id: 5
+  name: Support Tower Damage Boost I
   isUnlocked: 0
+  UpgradeIcon: {fileID: 21300000, guid: ba22304627ba4fa42bf33a21c7075aa6, type: 3}
+  description: Your Support Towers boost the damage of nearby towers by an additional
+    5%
+  flavourDescription: The tower's priests have learnt more powerful auras...
+  hasPrerequisites: 0
+  prerequisites: []
+  isMutuallyExclusiveWithOtherSkills: 0
+  mutuallyExclusiveSkills: []
+  isBuffOrDebuff: 0
+  affects: 0
+  valueType: 1
+  upgradeValue: 0.05
+  specificTowerOrEnemy: 0
+  affectedTowers:
+  - {fileID: 11400000, guid: 41b7f5a48aef3ad47a3cbfbcb2a93b69, type: 2}
+  affectedEnemies: []

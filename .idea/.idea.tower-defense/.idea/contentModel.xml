@@ -77,21 +77,28 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="ConstructionPoint.cs" t="Include" />
+          <e p="Editor" t="Include">
+            <e p="WaveManagerEditorWindow.cs" t="Include" />
+          </e>
           <e p="Enemy.cs" t="Include" />
           <e p="EnemyMovement.cs" t="Include" />
-          <e p="EnemyScriptableObject.cs" t="Include" />
           <e p="EnemySpawn.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
+          <e p="GlobalPlayerProgress.cs" t="Include" />
           <e p="LevelSelect.cs" t="Include" />
           <e p="PlayerProgress.cs" t="Include" />
           <e p="SceneManager.cs" t="Include" />
+          <e p="ScriptableObjects" t="Include">
+            <e p="EnemyScriptableObject.cs" t="Include" />
+            <e p="TowerData.cs" t="Include" />
+            <e p="UpgradeScriptableObject.cs" t="Include" />
+            <e p="WaveManagerScriptableObject.cs" t="Include" />
+          </e>
           <e p="Settings.cs" t="Include" />
           <e p="StringLiterals.cs" t="Include" />
           <e p="Tower.cs" t="Include" />
           <e p="TowerConstruction.cs" t="Include" />
-          <e p="TowerData.cs" t="Include" />
           <e p="UpgradeButton.cs" t="Include" />
-          <e p="UpgradeScriptableObject.cs" t="Include" />
           <e p="WaveManager.cs" t="Include" />
           <e p="zoomScrollRect.cs" t="Include" />
         </e>

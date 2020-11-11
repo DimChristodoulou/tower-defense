@@ -34,6 +34,5 @@ public class TowerConstruction : MonoBehaviour
         if (_manager.gold < _manager.TowerInformation[chosentower].cost)
             return;
         _manager.IsTowerSelected = true;
-        Debug.Log(_manager.IsTowerSelected + " " + _manager.SelectedTowerIndex);
     }
 }

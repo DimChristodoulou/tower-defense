@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   name: Spider
+  itemDrop: Spider Leg
+  drops: 2
   maxHealth: 5
   speed: 2
   goldValue: 10
-  itemDrop: Spider Leg
+  isFlying: 0
+  isHealer: 0
+  healing: 0
+  healingFlatValue: 0
+  healingPercentage: 0
+  healingCooldown: 0
+  healingRange: 0

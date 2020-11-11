@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   name: Goblin
+  itemDrop: Goblin Ear
+  drops: 1
   maxHealth: 10
   speed: 1.5
   goldValue: 20
-  itemDrop: Goblin Ear
+  isFlying: 0
+  isHealer: 0
+  healing: 0
+  healingFlatValue: 0
+  healingPercentage: 0
+  healingCooldown: 0
+  healingRange: 0

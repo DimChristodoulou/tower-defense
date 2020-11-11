@@ -15,7 +15,14 @@ MonoBehaviour:
   id: 3
   name: Wasp
   itemDrop: Wasp Sting
+  drops: 3
   maxHealth: 20
   speed: 2.2
   goldValue: 35
   isFlying: 1
+  isHealer: 0
+  healing: 0
+  healingFlatValue: 0
+  healingPercentage: 0
+  healingCooldown: 0
+  healingRange: 0

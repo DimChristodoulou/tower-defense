@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
@@ -22,7 +23,7 @@ public class Tower : MonoBehaviour{
     public TowerData towerData;
     private int currentLevel;
 
-    private float damage, firingRate, range, fireCountdown;
+    [ShowInInspector] private float damage, firingRate, range, fireCountdown;
     private Transform target;
     private Enemy targetEnemy;
     private List<Enemy> targetEnemies;
@@ -41,6 +42,24 @@ public class Tower : MonoBehaviour{
         else{
             InvokeRepeating("UpdateTarget", 0.0f, 0.5f);
         }
+
+        List<UpgradeScriptableObject> applicableUpgrades = GlobalPlayerProgress.getUnlockedUpgradesForSpecificTower(towerData);
+
+        foreach (var upgrade in applicableUpgrades){
+            switch (upgrade.affects){
+                case UpgradeScriptableObject.UpgradeEffect.Damage:
+                    damage = GlobalPlayerProgress.CalculateValueAfterUpgrade(damage, upgrade);
+                    break;
+                case UpgradeScriptableObject.UpgradeEffect.Cost:
+                    break;
+                case UpgradeScriptableObject.UpgradeEffect.Range:
+                    range = GlobalPlayerProgress.CalculateValueAfterUpgrade(range, upgrade);
+                    break;
+                case UpgradeScriptableObject.UpgradeEffect.FiringRate:
+                    firingRate = GlobalPlayerProgress.CalculateValueAfterUpgrade(firingRate, upgrade);
+                    break;
+            }
+        }
     }
 
     private void OnDrawGizmos() => Gizmos.DrawSphere(transform.position, range);
@@ -55,7 +74,6 @@ public class Tower : MonoBehaviour{
             switch (towerData.id){
                 case TowerData.ARROW_TOWER:
                     if (fireCountdown <= 0f){
-                        Debug.Log("Hit");
                         hitEnemy(targetEnemy, damage);
                         fireCountdown = 1f / firingRate;
                     }
@@ -71,7 +89,6 @@ public class Tower : MonoBehaviour{
                     break;
                 case TowerData.EARTHQUAKE_TOWER:
                     if (fireCountdown <= 0f){
-                        Debug.Log("Hit Earthquake");
                         hitEnemies(targetEnemies, damage);
                         fireCountdown = 1f / firingRate;
                     }

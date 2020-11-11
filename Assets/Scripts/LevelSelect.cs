@@ -22,13 +22,22 @@ public class LevelSelect : MonoBehaviour{
     [SerializeField] private GameObject _levelPanelLevelDescriptionField;
     [SerializeField] private GameObject _levelPanelLevelNameField;
     [SerializeField] private GameObject _levelPanelLevelPossibleEnemiesPanel;
+    [SerializeField] private GameObject _upgradesPanel;
+
+    [SerializeField] private Sprite _unlockedLevelBtnSprite;
 
     private int areaIndex, levelIndex;
     
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
+        _upgradesPanel = GameObject.Find("GlobalUpgrades");
         
+        //Load all upgrades into the Global Player Progress class
+        PlayerProgress playerProgress = new PlayerProgress();
+        playerProgress = playerProgress.loadProgress();
+        
+        GlobalPlayerProgress.UpdateUpgradePanel(playerProgress);
+        _upgradesPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -46,6 +55,8 @@ public class LevelSelect : MonoBehaviour{
         _levelPanelLevelNameField.GetComponent<Text>().text = levelNames[levelIndex];
         _levelPanelLevelDescriptionField.GetComponent<TextMeshProUGUI>().text = levelDescriptions[levelIndex];
         _updatePossibleEnemiesPanel(_levelPanelLevelPossibleEnemiesPanel);
+        
+        _levelPanel.GetComponentInChildren<Button>().onClick.AddListener((() => selectLevel(levelId)));
     }
 
     public void closeLevelPanel(){
@@ -63,6 +74,20 @@ public class LevelSelect : MonoBehaviour{
             Image image = gameObject.AddComponent<Image>();
             image.sprite = enemies.GetComponent<SpriteRenderer>().sprite;
             image.transform.localScale = new Vector3(0.75f, 0.65f);
+        }
+    }
+
+    public void selectLevel(string levelId){
+        //Scene manager load
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level_"+levelId);
+    }
+
+    public void toggleUpgradePanel(){
+        if (_upgradesPanel.activeSelf){
+            _upgradesPanel.SetActive(false);
+        }
+        else{
+            _upgradesPanel.SetActive(true);
         }
     }
 }

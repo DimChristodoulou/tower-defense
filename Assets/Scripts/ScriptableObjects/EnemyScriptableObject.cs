@@ -16,6 +16,7 @@ namespace Enemies{
         [Required] public int id;
         [Required] public string name;
         public string itemDrop;
+        public StringLiterals.singularItemDrops drops;
         
         [Title("Modifiable Properties")]
         [ValidateInput("CantBeZero", "This field cannot be zero")]

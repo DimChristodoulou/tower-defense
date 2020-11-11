@@ -34,6 +34,10 @@ public class Settings : MonoBehaviour{
             KeyCode.Alpha3
         }
     };
+    
+    public List<KeyCode> forbiddenBindings = new List<KeyCode>(){
+        //TODO: ADD SOME KEYCODES THAT ARE FORBIDDEN E.G. THE ESCAPE BTN
+    };
 
     private GameObject _settingsWindow;
     private GameObject _pauseMenu;
@@ -102,5 +106,9 @@ public class Settings : MonoBehaviour{
     public void StartRebindFor(GameObject buttonGO){
         _buttonToRebind = buttonGO.name;
         _buttonLabel = buttonGO.GetComponentInChildren<Text>();
+    }
+
+    public void ResumeButton(){
+        UnpauseGame();
     }
 }

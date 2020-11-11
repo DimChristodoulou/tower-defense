@@ -39,6 +39,7 @@ public class EnemyMovement : MonoBehaviour{
         }
         else{
             _gameManager.LoseLife();
+            _gameManager.activeEnemies--;
             Destroy(gameObject);
         }
     }

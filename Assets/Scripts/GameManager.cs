@@ -16,12 +16,23 @@ public class GameManager : MonoBehaviour{
     private const int GOLD_PER_SECOND = 2;
     public int life = 10;
     public TextMeshProUGUI lifeText, goldText;
-    private GameObject _lossMenu;
+    private GameObject _lossMenu, _winMenu;
     private GameObject _killedEnemiesPanel;
     private Dictionary<EnemyScriptableObject, int> _killedEnemies = new Dictionary<EnemyScriptableObject, int>();
     private int _selectedTowerIndex = -1;
     private bool _isTowerSelected = false;
+    private bool _won = false;
+    private PlayerProgress playerProgress;
 
+    public int activeEnemies = 0;
+
+    public List<UpgradeScriptableObject> allUpgrades;
+
+    /*
+     * Access Methods
+     */
+    #region access methods
+    
     public Dictionary<EnemyScriptableObject, int> KilledEnemies
     {
         get => _killedEnemies;
@@ -39,20 +50,70 @@ public class GameManager : MonoBehaviour{
         get => _isTowerSelected;
         set => _isTowerSelected = value;
     }
-
+    #endregion
+    /*
+     * End Access Methods
+     */
+    
     private void Start(){
+        Time.timeScale = 1f;
+        
         _lossMenu = GameObject.Find("LossMenu");
+        _winMenu = GameObject.Find("WinMenu");
         _killedEnemiesPanel = GameObject.Find("KilledEnemiesPanel");
+        _killedEnemiesPanel.SetActive(false);
         _lossMenu.SetActive(false);
+        _winMenu.SetActive(false);
         lifeText.text = "Lives: " + life;
         InvokeRepeating("AddGoldPerSecond", 0.0f, 2f);
+        
+        //Load all upgrades into the Global Player Progress class
+        playerProgress = new PlayerProgress();
+        playerProgress = playerProgress.loadProgress();
+        
+        foreach (UpgradeScriptableObject upgrade in allUpgrades){
+            
+            foreach (int unlockedUpgrade in playerProgress.UnlockedUpgrades){
+                if (upgrade.id == unlockedUpgrade){
+                    GlobalPlayerProgress.UnlockedUpgrades.Add(upgrade);
+                }
+            }
+        }
     }
 
     private void Update(){
-        if (!Input.GetKeyDown(KeyCode.Z))
-            return;
+        //DEBUG: REMOVE LATER
+        if (Input.GetKeyDown(KeyCode.Z)){
+            LoseLife();
+        }
+        
+        if (gameObject.GetComponent<WaveManager>().CurrentWave == gameObject.GetComponent<WaveManager>().waveManager.waves.Count 
+            && gameObject.GetComponent<GameManager>().life > 0 
+            && activeEnemies == 0 && !_won){
+            
+            _won = true;
+            _winMenu.SetActive(true);
+            Time.timeScale = 0.0f;
+            _killedEnemiesPanel.SetActive(true);
+            updateKilledEnemiesPanel(_killedEnemiesPanel);
 
-        LoseLife();
+            foreach (var drops in GlobalPlayerProgress.playerDrops){
+                Debug.Log(drops.Key);
+                Debug.Log(drops.Value);
+            }
+            
+            // If player won, we need to update his wallet with the new drops and unlock the next level
+            foreach (var killedEnemy in _killedEnemies){
+                Debug.Log(killedEnemy.Key.drops);
+                if (GlobalPlayerProgress.playerDrops.ContainsKey(killedEnemy.Key.drops)){
+                    GlobalPlayerProgress.playerDrops[killedEnemy.Key.drops] += killedEnemy.Value;
+                }
+                else{
+                    GlobalPlayerProgress.playerDrops.Add(killedEnemy.Key.drops, killedEnemy.Value);
+                }
+            }
+            playerProgress.saveProgress();
+        }
     }
 
     private void LateUpdate(){
@@ -104,32 +165,54 @@ public class GameManager : MonoBehaviour{
     public void LoseLife(){
         --life;
         lifeText.text = "Lives: " + life;
-        if (life != 0)
-            return;
 
-        Time.timeScale = 0.0f;
-        _lossMenu.SetActive(true);
-        _killedEnemiesPanel.SetActive(true);
+        if (life == 0){
+            Time.timeScale = 0.0f;
+            _lossMenu.SetActive(true);
+            _killedEnemiesPanel.SetActive(true);
 
+            updateKilledEnemiesPanel(_killedEnemiesPanel);
+        }
+    }
+
+    private void updateKilledEnemiesPanel(GameObject _killedEnemiesPanel){
+        List<GameObject> dropTexts = new List<GameObject>();
+
+        foreach (var drop in StringLiterals.drops){
+            dropTexts.Add(GameObject.Find(drop + " Text"));
+            dropTexts[dropTexts.Count-1].SetActive(false);
+        }
+        
         foreach (KeyValuePair<EnemyScriptableObject, int> killedEnemy in _killedEnemies){
-            GameObject gameObject = new GameObject();
-            gameObject.transform.SetParent(_killedEnemiesPanel.transform);
-            TextMeshProUGUI textMeshProUgui = gameObject.AddComponent<TextMeshProUGUI>();
-            textMeshProUgui.fontSize = 14f;
-            int num;
-
-            if (killedEnemy.Value == 1){
-                TextMeshProUGUI component = textMeshProUgui.GetComponent<TextMeshProUGUI>();
-                num = killedEnemy.Value;
-                string str = num + " " + killedEnemy.Key.itemDrop;
-                component.text = str;
-            }
-            else if (killedEnemy.Value > 1){
-                TextMeshProUGUI component = textMeshProUgui.GetComponent<TextMeshProUGUI>();
-                num = killedEnemy.Value;
-                string str = num + " " + killedEnemy.Key.itemDrop + "s";
-                component.text = str;
+            foreach (GameObject dropText in dropTexts){
+                if (dropText.name == killedEnemy.Key.itemDrop + " Text"){
+                    dropText.SetActive(true);
+                    int num;
+            
+                    if (killedEnemy.Value == 1){
+                        num = killedEnemy.Value;
+                        string str = num + " " + killedEnemy.Key.itemDrop;
+                        dropText.GetComponent<TextMeshProUGUI>().text = str;
+                    }
+                    else if (killedEnemy.Value > 1){
+                        num = killedEnemy.Value;
+                        string str = num + " " + killedEnemy.Key.itemDrop + "s";
+                        dropText.GetComponent<TextMeshProUGUI>().text = str;
+                    }
+                }
             }
         }
+    }
+
+    public void GoToLevelSelect(){
+        UnityEngine.SceneManagement.SceneManager.LoadScene("LevelSelect");
+    }
+    
+    public void QuitGame(){
+        Application.Quit();
+    }
+
+    public void RestartLevel(){
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }
