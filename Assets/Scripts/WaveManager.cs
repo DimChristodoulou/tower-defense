@@ -101,6 +101,7 @@ public class WaveManager : MonoBehaviour{
                 StartCoroutine(gameObject.GetComponent<EnemySpawn>().SpawnRandomEnemy(currentWave, waveManager.isEndless));
                 break;
             case WaveManagerScriptableObject.WaveSpawnType.WeightedRandom:
+                StartCoroutine(gameObject.GetComponent<EnemySpawn>().SpawnWeightedRandomEnemy(currentWave));
                 break;
             case WaveManagerScriptableObject.WaveSpawnType.Specific:
                 StartCoroutine(gameObject.GetComponent<EnemySpawn>().SpawnSpecificEnemies(currentWave));

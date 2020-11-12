@@ -15,6 +15,15 @@ MonoBehaviour:
   isEndless: 0
   endlessPossibleEnemies: []
   waves:
+  - enemySpawnInterval: 1.5
+    waveSpawn: 30
+    EnemiesList:
+    - {fileID: 8198794352431694409, guid: 28b02000bf47c2b48ba4edbc66660091, type: 3}
+    - {fileID: 8198794352431694409, guid: 215e721e9ef00354b93e287cc0f8003c, type: 3}
+    - {fileID: 2680536106917734335, guid: 06135d323efd92048963d2b343656235, type: 3}
+    waveSpawnType: 1
+    enemiesWeightOrNumber: 1e0000000a0000003c000000
+    waveEnemyCount: 15
   - enemySpawnInterval: 1
     waveSpawn: 10
     EnemiesList:
@@ -22,13 +31,4 @@ MonoBehaviour:
     - {fileID: 8198794352431694409, guid: 28b02000bf47c2b48ba4edbc66660091, type: 3}
     waveSpawnType: 2
     enemiesWeightOrNumber: 0500000002000000
-    waveEnemyCount: 15
-  - enemySpawnInterval: 1.5
-    waveSpawn: 30
-    EnemiesList:
-    - {fileID: 8198794352431694409, guid: 28b02000bf47c2b48ba4edbc66660091, type: 3}
-    - {fileID: 2680536106917734335, guid: 06135d323efd92048963d2b343656235, type: 3}
-    - {fileID: 8198794352431694409, guid: 215e721e9ef00354b93e287cc0f8003c, type: 3}
-    waveSpawnType: 0
-    enemiesWeightOrNumber: 
     waveEnemyCount: 15
