@@ -22,7 +22,6 @@ public class WaveManagerScriptableObject : ScriptableObject
         
         [TableColumnWidth(230, Resizable = false)]
         [VerticalGroup("Wave Enemies")]
-        [AssetList(Path = "/Enemies")]
         public List<GameObject> EnemiesList;
 
         #region Wave Spawn Type
@@ -59,7 +58,7 @@ public class WaveManagerScriptableObject : ScriptableObject
         public List<int> enemiesWeightOrNumber;
         
         [Space]
-        [ShowIf("@this.waveSpawnType == WaveSpawnType.Randomly")]
+        [ShowIf("@this.waveSpawnType != WaveSpawnType.Specific")]
         [TableColumnWidth(150, Resizable = false)]
         public int waveEnemyCount;
         
