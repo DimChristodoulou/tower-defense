@@ -65,7 +65,7 @@ public class Tower : MonoBehaviour{
     private void OnDrawGizmos() => Gizmos.DrawSphere(transform.position, range);
 
     private void Update(){
-        if (target == null){
+        if (target == null && targetEnemies == null){
             if (gameObject.GetComponent<LineRenderer>()){
                 gameObject.GetComponent<LineRenderer>().enabled = false;
             }
@@ -100,16 +100,11 @@ public class Tower : MonoBehaviour{
     }
 
     private void hitEnemy(Enemy enemyToHit, float damageToTake, bool isContinuousDamage = false){
-        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Support Tower")){
-            if (Vector2.Distance(transform.position, gameObject.transform.position) <= gameObject.GetComponent<Tower>().range){
-                if (isContinuousDamage)
-                    damageToTake += damage * Time.deltaTime * gameObject.GetComponent<Tower>().damage;
-                else
-                    damageToTake += damage * gameObject.GetComponent<Tower>().damage;
-            }
-        }
+        damageToTake = ModifyDamage(damageToTake, isContinuousDamage, enemyToHit);
 
-        enemyToHit.loseHealth(damageToTake);
+        if (enemyToHit.CurrentHealth > 0){
+            enemyToHit.loseHealth(damageToTake);
+        }
     }
 
     private void UpdateTarget(){
@@ -138,7 +133,7 @@ public class Tower : MonoBehaviour{
                 }
             }
         }
-        
+        Debug.Log(shortestDistance + " " + range);
         if (nearestEnemy != null && shortestDistance <= range)
         {
             target = nearestEnemy.transform;
@@ -167,17 +162,14 @@ public class Tower : MonoBehaviour{
     }
     
     private void hitEnemies(List<Enemy> enemiesToHit, float damageToTake, bool isContinuousDamage = false){
-        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Support Tower")){
-            if (Vector2.Distance(transform.position, gameObject.transform.position) <= gameObject.GetComponent<Tower>().range){
-                if (isContinuousDamage)
-                    damageToTake += damage * Time.deltaTime * gameObject.GetComponent<Tower>().damage;
-                else
-                    damageToTake += damage * gameObject.GetComponent<Tower>().damage;
-            }
-        }
-
+        
         foreach (Enemy enemyToHit in enemiesToHit){
-            enemyToHit.loseHealth(damageToTake);
+            damageToTake = ModifyDamage(damageToTake, isContinuousDamage, enemyToHit);
+
+            // Possibly need that check in case multiple towers hit same enemy and "kill him" multiple times
+            if (enemyToHit.CurrentHealth > 0){
+                enemyToHit.loseHealth(damageToTake);
+            }
         }
     }
 
@@ -203,5 +195,38 @@ public class Tower : MonoBehaviour{
 
             ++currentLevel;
         }
+    }
+    
+    /*
+     * Damage modifying functions
+     */
+    private float ModifyDamage(float damageToTake, bool isContinuousDamage, Enemy enemyToHit){
+        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Support Tower")){
+            if (Vector2.Distance(transform.position, gameObject.transform.position) <= gameObject.GetComponent<Tower>().range){
+                if (isContinuousDamage)
+                    damageToTake += damage * Time.deltaTime * gameObject.GetComponent<Tower>().damage;
+                else
+                    damageToTake += damage * gameObject.GetComponent<Tower>().damage;
+            }
+        }
+        
+        //Take into account resistances/vulnerabilities
+        foreach (DamageTypes damageType in towerData.towerDamageTypes){
+            if (enemyToHit.enemyData.hasResistanceToDamageTypes){
+                if (enemyToHit.enemyData.enemyResistances.Contains(damageType)){
+                    //Resistance to a damage type reduces incoming damage by 50%
+                    damageToTake -= damageToTake / 2;
+                }
+            }
+
+            if (enemyToHit.enemyData.hasVulnerabilityToDamageTypes){
+                if (enemyToHit.enemyData.enemyResistances.Contains(damageType)){
+                    //Resistance to a damage type increases incoming damage by 50%
+                    damageToTake += damageToTake / 2;
+                }
+            }
+        }
+
+        return damageToTake;
     }
 }

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   name: Spider
+  description: The weakest enemies you can encounter, spiders have little health
+    but are quite fast.
   itemDrop: Spider Leg
   drops: 2
   maxHealth: 5

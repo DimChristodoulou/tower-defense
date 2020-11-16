@@ -5,6 +5,8 @@ using System.IO;
 using Enemies;
 using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -12,39 +14,46 @@ using UnityEngine.UI;
 public class PlayerProgress{
 
     [SerializeField] public List<int> UnlockedUpgrades = new List<int>();
-    [SerializeField] public List<int> UnlockedLevels;
+    [SerializeField] public List<int> UnlockedLevels = new List<int>();
     
     [SerializeField] public List<StringLiterals.singularItemDrops> playerDropKeys = new List<StringLiterals.singularItemDrops>();
     [SerializeField] public List<int> playerDropCounts = new List<int>();
 
+    [SerializeField] public bool passedTutorial;
+
     public void saveProgress(){
         foreach (var upgrade in GlobalPlayerProgress.UnlockedUpgrades){
-            UnlockedUpgrades.Add(upgrade.id);
+            if (!UnlockedUpgrades.Contains(upgrade.id)){
+                UnlockedUpgrades.Add(upgrade.id);
+            }
         }
 
         foreach (var drop in GlobalPlayerProgress.playerDrops){
-            if (playerDropKeys.Contains(drop.Key)){
-                int index = playerDropKeys.IndexOf(drop.Key);
-                playerDropCounts[index] += drop.Value;
-            }
-            else{
+            if (!playerDropKeys.Contains(drop.Key)){
                 playerDropKeys.Add(drop.Key);
                 playerDropCounts.Add(drop.Value);
             }
+            else{
+                int index = playerDropKeys.IndexOf(drop.Key);
+                playerDropCounts[index] = drop.Value;
+            }
+        }
 
+        foreach (int levelId in GlobalPlayerProgress.UnlockedLevels){
+            if (!UnlockedLevels.Contains(levelId)){
+                UnlockedLevels.Add(levelId);
+            }
         }
         
         string json = JsonUtility.ToJson(this);
         System.IO.File.WriteAllText(Application.persistentDataPath + "/unlocks.json", json);
         Debug.Log(json);
-        Debug.Log(Application.persistentDataPath);
     }
     
     public PlayerProgress loadProgress(){
         if (File.Exists(Application.persistentDataPath + "/unlocks.json"))
         {
             string json = File.ReadAllText(Application.persistentDataPath + "/unlocks.json");
-            Debug.Log(json);
             PlayerProgress playerProgress = JsonUtility.FromJson<PlayerProgress>(json);
 
             for (int i = 0; i < playerProgress.playerDropKeys.Count; i++){
@@ -54,6 +63,20 @@ public class PlayerProgress{
                 else{
                     GlobalPlayerProgress.playerDrops.Add(playerProgress.playerDropKeys[i], playerProgress.playerDropCounts[i]);
                 }
+            }
+
+            foreach (int levelId in playerProgress.UnlockedLevels){
+                if (!GlobalPlayerProgress.UnlockedLevels.Contains(levelId)){
+                    GlobalPlayerProgress.UnlockedLevels.Add(levelId);
+                }
+            }
+
+            foreach (int upgradeId in playerProgress.UnlockedUpgrades){
+                Addressables.LoadAssetAsync<UpgradeScriptableObject>("Upgrade_"+upgradeId).Completed +=
+                    delegate(AsyncOperationHandle<UpgradeScriptableObject> handle)
+                    {
+                        GlobalPlayerProgress.UnlockedUpgrades.Add(handle.Result);
+                    };
             }
             
             return playerProgress;

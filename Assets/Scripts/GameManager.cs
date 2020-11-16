@@ -4,10 +4,13 @@
 // MVID: A28AF8C8-695A-49DE-887A-AA1AA02D690F
 // Assembly location: E:\Tower_Defense_Builds\14-10-2020\Tower Defense_Data\Managed\Assembly-CSharp.dll
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Enemies;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour{
@@ -23,6 +26,7 @@ public class GameManager : MonoBehaviour{
     private bool _isTowerSelected = false;
     private bool _won = false;
     private PlayerProgress playerProgress;
+    private GameObject _tutorialPanelIncomingEnemies, _tutorialPanelBuildMenu, _tutorialPanelEnemyDetails, _tutorialPanelStartEnemyWave;
 
     public int activeEnemies = 0;
 
@@ -54,19 +58,34 @@ public class GameManager : MonoBehaviour{
     /*
      * End Access Methods
      */
-    
+
+    private void Awake(){
+        activeEnemies = 0;
+    }
+
     private void Start(){
-        Time.timeScale = 1f;
-        
+
         _lossMenu = GameObject.Find("LossMenu");
         _winMenu = GameObject.Find("WinMenu");
         _killedEnemiesPanel = GameObject.Find("KilledEnemiesPanel");
+        
+        _tutorialPanelBuildMenu = GameObject.Find("BuildingPanelTutorial");
+        _tutorialPanelBuildMenu.SetActive(false);
+        
+        _tutorialPanelIncomingEnemies = GameObject.Find("IncomingEnemiesTutorial");
+        _tutorialPanelIncomingEnemies.SetActive(false);
+        
+        _tutorialPanelEnemyDetails = GameObject.Find("EnemyDetailsPanelTutorial");
+        _tutorialPanelEnemyDetails.SetActive(false);
+        
+        _tutorialPanelStartEnemyWave = GameObject.Find("StartWaveEarlyTutorial");
+        _tutorialPanelStartEnemyWave.SetActive(false);
+        
         _killedEnemiesPanel.SetActive(false);
         _lossMenu.SetActive(false);
         _winMenu.SetActive(false);
         lifeText.text = "Lives: " + life;
-        InvokeRepeating("AddGoldPerSecond", 0.0f, 2f);
-        
+
         //Load all upgrades into the Global Player Progress class
         playerProgress = new PlayerProgress();
         playerProgress = playerProgress.loadProgress();
@@ -79,6 +98,14 @@ public class GameManager : MonoBehaviour{
                 }
             }
         }
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level_0" || !playerProgress.passedTutorial){
+            playerProgress.passedTutorial = true;
+            StartCoroutine(playTutorial());
+        }
+        
+        InvokeRepeating("AddGoldPerSecond", 0.0f, 2f);
+        Time.timeScale = 1f;
     }
 
     private void Update(){
@@ -88,8 +115,7 @@ public class GameManager : MonoBehaviour{
         }
         
         if (gameObject.GetComponent<WaveManager>().CurrentWave == gameObject.GetComponent<WaveManager>().waveManager.waves.Count 
-            && gameObject.GetComponent<GameManager>().life > 0 
-            && activeEnemies == 0 && !_won){
+            && gameObject.GetComponent<GameManager>().life > 0 && activeEnemies <= 0 && !_won){
             
             _won = true;
             _winMenu.SetActive(true);
@@ -104,7 +130,6 @@ public class GameManager : MonoBehaviour{
             
             // If player won, we need to update his wallet with the new drops and unlock the next level
             foreach (var killedEnemy in _killedEnemies){
-                Debug.Log(killedEnemy.Key.drops);
                 if (GlobalPlayerProgress.playerDrops.ContainsKey(killedEnemy.Key.drops)){
                     GlobalPlayerProgress.playerDrops[killedEnemy.Key.drops] += killedEnemy.Value;
                 }
@@ -112,6 +137,14 @@ public class GameManager : MonoBehaviour{
                     GlobalPlayerProgress.playerDrops.Add(killedEnemy.Key.drops, killedEnemy.Value);
                 }
             }
+
+            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            int levelId = Int32.Parse(sceneName.Substring(sceneName.Length-1, 1));
+
+            if(!GlobalPlayerProgress.UnlockedLevels.Contains(levelId)){
+                GlobalPlayerProgress.UnlockedLevels.Add(levelId);
+            }
+            
             playerProgress.saveProgress();
         }
     }
@@ -215,4 +248,85 @@ public class GameManager : MonoBehaviour{
     public void RestartLevel(){
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
+
+
+    #region tutorial specific part
+    
+    public IEnumerator playTutorial(){
+        yield return StartCoroutine(startTutorial());
+        yield return StartCoroutine(startTutorialPart2());
+        yield return StartCoroutine(startTutorialPart3());
+        yield return StartCoroutine(startTutorialPart4());
+    }
+    
+    public IEnumerator startTutorial(){
+        Time.timeScale = 0;
+
+        if (!_tutorialPanelBuildMenu.activeSelf){
+            _tutorialPanelBuildMenu.SetActive(true);
+
+            while (true){
+                if (Input.GetMouseButtonDown(0)){
+                    _tutorialPanelBuildMenu.SetActive(false);
+                    yield break;
+                }
+                yield return null;
+            }
+        }
+        
+    }
+    
+    public IEnumerator startTutorialPart2(){
+        Debug.Log("start");
+        
+        if (!_tutorialPanelIncomingEnemies.activeSelf){
+            Debug.Log("start2");
+            _tutorialPanelIncomingEnemies.SetActive(true);
+
+            while (true){
+                yield return null;
+                
+                if (Input.GetMouseButtonDown(0)){
+                    Debug.Log("start3");
+                    _tutorialPanelIncomingEnemies.SetActive(false);
+                    yield break;
+                }
+            }
+        }
+    }
+    
+    public IEnumerator startTutorialPart3(){
+
+        if (!_tutorialPanelEnemyDetails.activeSelf){
+            _tutorialPanelEnemyDetails.SetActive(true);
+
+            while (true){
+                yield return null;
+                
+                if (Input.GetMouseButtonDown(0)){
+                    _tutorialPanelEnemyDetails.SetActive(false);
+                    yield break;
+                }
+            }
+        }
+    }
+    
+    public IEnumerator startTutorialPart4(){
+
+        if (!_tutorialPanelStartEnemyWave.activeSelf){
+            _tutorialPanelStartEnemyWave.SetActive(true);
+
+            while (true){
+                yield return null;
+                
+                if (Input.GetMouseButtonDown(0)){
+                    _tutorialPanelStartEnemyWave.SetActive(false);
+                    Time.timeScale = 1f;
+                    yield break;
+                }
+            }
+        }
+    }
+    
+    #endregion
 }

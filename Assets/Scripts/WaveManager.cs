@@ -52,13 +52,15 @@ public class WaveManager : MonoBehaviour{
             Destroy(component.gameObject);
         }
 
-        foreach (GameObject enemies in waveManager.waves[_currentWave].EnemiesList){
+        foreach (GameObject enemy in waveManager.waves[_currentWave].EnemiesList){
             GameObject gameObject = new GameObject();
             gameObject.transform.SetParent(incomingEnemiesPanel.transform);
             gameObject.transform.position = incomingEnemiesPanel.transform.position;
             Image image = gameObject.AddComponent<Image>();
-            image.sprite = enemies.GetComponent<SpriteRenderer>().sprite;
+            image.sprite = enemy.GetComponent<SpriteRenderer>().sprite;
             image.transform.localScale = new Vector3(0.75f, 0.65f);
+            gameObject.AddComponent<EnemyInformationPanel>();
+            gameObject.GetComponent<EnemyInformationPanel>().enemy = enemy.GetComponent<Enemy>();
         }
     }
 

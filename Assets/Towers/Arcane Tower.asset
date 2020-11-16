@@ -15,9 +15,10 @@ MonoBehaviour:
   id: 1
   pathToResource: Towers/ArcaneTower
   cost: 100
-  damage: 1
+  damage: 1.5
   firingRate: 0
-  range: 4
+  range: 5
+  towerDamageTypes: 07000000
   isAreaTower: 0
   isSupportTower: 0
   canHitFlyingEnemies: 0

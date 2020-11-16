@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   name: War Turtle
+  description: The War Turtle is a tough beast. Its shell can take a lot of hits
+    before it cracks.
   itemDrop: War Turtle Shell
+  drops: 0
   maxHealth: 60
   speed: 1
   goldValue: 50

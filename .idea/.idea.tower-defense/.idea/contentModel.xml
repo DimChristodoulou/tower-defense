@@ -81,6 +81,7 @@
             <e p="WaveManagerEditorWindow.cs" t="Include" />
           </e>
           <e p="Enemy.cs" t="Include" />
+          <e p="EnemyInformationPanel.cs" t="Include" />
           <e p="EnemyMovement.cs" t="Include" />
           <e p="EnemySpawn.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />

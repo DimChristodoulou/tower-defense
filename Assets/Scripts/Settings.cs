@@ -36,7 +36,29 @@ public class Settings : MonoBehaviour{
     };
     
     public List<KeyCode> forbiddenBindings = new List<KeyCode>(){
-        //TODO: ADD SOME KEYCODES THAT ARE FORBIDDEN E.G. THE ESCAPE BTN
+        KeyCode.Escape,
+        KeyCode.Tab,
+        KeyCode.LeftShift,
+        KeyCode.RightShift,
+        KeyCode.LeftAlt,
+        KeyCode.RightAlt,
+        KeyCode.LeftWindows,
+        KeyCode.RightWindows,
+        KeyCode.CapsLock,
+        KeyCode.LeftControl,
+        KeyCode.RightControl,
+        KeyCode.AltGr,
+        KeyCode.KeypadEnter,
+        KeyCode.Insert,
+        KeyCode.Delete,
+        KeyCode.Home,
+        KeyCode.PageDown,
+        KeyCode.PageUp,
+        KeyCode.End,
+        KeyCode.Numlock,
+        KeyCode.Print,
+        KeyCode.ScrollLock,
+        KeyCode.Pause
     };
 
     private GameObject _settingsWindow;
@@ -68,6 +90,9 @@ public class Settings : MonoBehaviour{
             if (Input.GetKeyDown(key)){
                 if (keyBindings.ContainsValue(key)){
                     Debug.LogWarning("Button is already a keybind!");
+                }
+                else if (forbiddenBindings.Contains(key)){
+                    Debug.LogWarning("Button is a forbidden keybind!");
                 }
                 else{
                     keyBindings[_buttonToRebind] = key;

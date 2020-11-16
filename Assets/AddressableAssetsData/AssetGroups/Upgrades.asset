@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Upgrades
+  m_EditorClassIdentifier: 
+  m_GroupName: Upgrades
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 1a7033f95f1575242a91e4770ce21b7f
+  m_SerializeEntries:
+  - m_GUID: 295f905d6d3fac74dacee2c733da76d2
+    m_Address: Upgrade_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5df7c234af8cb174396a3b28b76d3287
+    m_Address: Upgrade_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 85e132a108aee024da0ce466aecc4193
+    m_Address: Upgrade_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 93db5083ca0378449acbc62e153c7398
+    m_Address: Upgrade_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ad83b31f2acb8d84eb93d70b80975618
+    m_Address: Upgrade_0
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ba9e44ee51460d340b5e71dbf3238d6c
+    m_Address: Upgrade_5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1b8254426e91a7345bc7c2eb41815832, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 50104dd5ffa76c4478e7ef9578e6d517, type: 2}
+    - {fileID: 11400000, guid: fc7822f8d6bec704892923bc7959dd57, type: 2}

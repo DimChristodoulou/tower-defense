@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   pathToResource: Towers/EarthquakeTower
-  cost: 200
+  cost: 175
   damage: 3
   firingRate: 0.4
-  range: 3.5
+  range: 5
+  towerDamageTypes: 03000000
   isAreaTower: 1
   isSupportTower: 0
   canHitFlyingEnemies: 0

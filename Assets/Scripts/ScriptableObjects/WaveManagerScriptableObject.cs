@@ -21,6 +21,7 @@ public class WaveManagerScriptableObject : ScriptableObject
         public float waveSpawn;
         
         [TableColumnWidth(230, Resizable = false)]
+        [AssetsOnly]
         [VerticalGroup("Wave Enemies")]
         public List<GameObject> EnemiesList;
 

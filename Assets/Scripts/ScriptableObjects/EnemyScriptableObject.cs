@@ -5,6 +5,7 @@
 // Assembly location: E:\Tower_Defense_Builds\14-10-2020\Tower Defense_Data\Managed\Assembly-CSharp.dll
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -15,6 +16,7 @@ namespace Enemies{
     public class EnemyScriptableObject : ScriptableObject{
         [Required] public int id;
         [Required] public string name;
+        [TextArea] public string description;
         public string itemDrop;
         public StringLiterals.singularItemDrops drops;
         
@@ -46,7 +48,13 @@ namespace Enemies{
         [ShowIf("@this.isHealer && this.healing == HealingValue.Percentage")] public float healingPercentage;
         [ShowIf("isHealer")] public float healingCooldown;
         [ShowIf("isHealer")] public float healingRange;
-
+        [Space]
+        
+        [LabelWidth(250)] public bool hasVulnerabilityToDamageTypes;
+        [ShowIf("hasVulnerabilityToDamageTypes")] public List<DamageTypes> enemyVulnerabilities;
+        
+        [LabelWidth(250)] public bool hasResistanceToDamageTypes;
+        [ShowIf("hasResistanceToDamageTypes")] public List<DamageTypes> enemyResistances;
 
         private bool CantBeZero(float field){
             return Math.Abs(field) > 0f;

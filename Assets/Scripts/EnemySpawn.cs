@@ -4,10 +4,12 @@
 // MVID: A28AF8C8-695A-49DE-887A-AA1AA02D690F
 // Assembly location: E:\Tower_Defense_Builds\14-10-2020\Tower Defense_Data\Managed\Assembly-CSharp.dll
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Enemies;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemySpawn : MonoBehaviour{
     public List<GameObject> spawnPoints;
@@ -15,9 +17,13 @@ public class EnemySpawn : MonoBehaviour{
     private WaveManager _waveManager;
     private GameManager _gameManager;
 
-    private void Start(){
+    private void Awake(){
         _waveManager = gameObject.GetComponent<WaveManager>();
         _gameManager = gameObject.GetComponent<GameManager>();
+    }
+
+    private void Start(){
+
     }
 
     private void Update(){ }
@@ -67,16 +73,15 @@ public class EnemySpawn : MonoBehaviour{
     public IEnumerator SpawnSpecificEnemies(WaveManagerScriptableObject.Wave wave){
         int activeEnemyCount = 0;
         bool controlVar = true;
-        
-        Vector3 position = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
-        
+
         for (int i = 0; i < wave.EnemiesList.Count; i++){
             for (int j = 0; j < wave.enemiesWeightOrNumber[i]; j++){
+                Vector3 position = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
                 Instantiate(wave.EnemiesList[i], 
                     new Vector3(position.x, position.y, 0.0f), 
                     Quaternion.identity);
                 
-                ++_gameManager.activeEnemies;
+                _gameManager.activeEnemies++;
                 ++activeEnemyCount;
                 
                 yield return new WaitForSeconds(wave.enemySpawnInterval);

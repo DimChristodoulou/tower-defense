@@ -9,6 +9,17 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+public enum DamageTypes{
+    Piercing,
+    Slashing,
+    Bludgeoning,
+    Nature,
+    Fire,
+    Electric,
+    Cold,
+    Arcane
+}
+
 [CreateAssetMenu(fileName = "Tower", menuName = "ScriptableObjects/TowerData", order = 1)]
 [Serializable]
 public class TowerData : ScriptableObject
@@ -27,6 +38,7 @@ public class TowerData : ScriptableObject
     public float damage;
     public float firingRate;
     public float range;
+    public List<DamageTypes> towerDamageTypes;
 
     [Title("Conditional Tower Properties")]
     public bool isAreaTower;

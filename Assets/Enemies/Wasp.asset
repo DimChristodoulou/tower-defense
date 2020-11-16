@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   name: Wasp
+  description: A wasp is a flying enemy that can move fast.
   itemDrop: Wasp Sting
   drops: 3
   maxHealth: 20

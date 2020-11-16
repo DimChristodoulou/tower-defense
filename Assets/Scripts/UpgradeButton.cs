@@ -25,6 +25,8 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IEventSystemHa
         prerequisitesText = GameObject.Find("PrerequisitesText").GetComponent<TextMeshProUGUI>();
         mutuallyExclusiveText = GameObject.Find("MutuallyExclusiveText").GetComponent<TextMeshProUGUI>();
         costText = GameObject.Find("CostsText").GetComponent<TextMeshProUGUI>();
+        
+        GetComponent<Button>().onClick.AddListener(CheckAndUnlockUpgrade);
     }
 
     private void Start() => tooltipPanel.SetActive(false);
@@ -52,7 +54,7 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IEventSystemHa
         bool canPurchase = isUpgradePurchasable();
 
         if (canPurchase){
-            costText.color = Color.green;
+            costText.color = new Color(0.02f, 0.41f, 0.17f);
         }
         
         if (upgrade.hasPrerequisites){
@@ -93,25 +95,28 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IEventSystemHa
                 }
             }
         }
-        Debug.Log("test");
+        
         if (areAllPrerequisitesUnlocked){
             UnlockUpgradeIfNotUnlocked();
         }
     }
 
     private void UnlockUpgradeIfNotUnlocked(){
-        if (!upgrade.isUnlocked){
-            Debug.Log("test2");
+        if (!GlobalPlayerProgress.UnlockedUpgrades.Contains(upgrade)){
             bool canPurchase = isUpgradePurchasable();
             
             if (canPurchase){
-                Debug.Log("test3");
+                foreach (KeyValuePair<StringLiterals.singularItemDrops, int> drops in upgrade.costs){
+                    GlobalPlayerProgress.playerDrops[drops.Key] -= drops.Value;
+                }
+
                 upgrade.isUnlocked = true;
                 gameObject.GetComponent<Image>().sprite = upgrade.UpgradeIcon;
                 GlobalPlayerProgress.UnlockedUpgrades.Add(upgrade);
-                Debug.Log("test4");
                 PlayerProgress currentPlayerProgress = new PlayerProgress();
                 currentPlayerProgress.saveProgress();
+                
+                GlobalPlayerProgress.UpdatePlayerWallet(currentPlayerProgress, GameObject.Find("PlayerWallet"));
             }
         }
     }

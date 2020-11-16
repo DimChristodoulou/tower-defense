@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Wave Managers
+  m_EditorClassIdentifier: 
+  m_GroupName: Wave Managers
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 1591d50c801b0bf4fb74cbafa5776307
+  m_SerializeEntries:
+  - m_GUID: 311b9ea787f352b4eac9d9ae06ed3d34
+    m_Address: Assets/Wave Managers/Level_0 Wave Manager.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 72b8b8d80df749b4b93b4a86441909ec
+    m_Address: Assets/Wave Managers/Level_1 Wave Manager.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1b8254426e91a7345bc7c2eb41815832, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 9b27aaf20a1e5ca4f89c5461717c0c2b, type: 2}
+    - {fileID: 11400000, guid: a75dd99806349a849b8330daebcc0058, type: 2}

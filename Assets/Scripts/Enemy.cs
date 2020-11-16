@@ -4,8 +4,10 @@
 // MVID: A28AF8C8-695A-49DE-887A-AA1AA02D690F
 // Assembly location: E:\Tower_Defense_Builds\14-10-2020\Tower Defense_Data\Managed\Assembly-CSharp.dll
 
+using System.Collections;
 using System.Collections.Generic;
 using Enemies;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +18,7 @@ public class Enemy : MonoBehaviour
     public EnemyScriptableObject enemyData;
     private GameManager _manager;
 
+    [ShowInInspector]
     public float CurrentHealth
     {
         get => currentHealth;
@@ -88,8 +91,13 @@ public class Enemy : MonoBehaviour
 
         _manager.KilledEnemies[gameObject.GetComponent<Enemy>().enemyData]++;
         _manager.AddGold(enemyData.goldValue);
-        _manager.activeEnemies--;
+        //Debug.Log("in KillEnemy with " + _manager.activeEnemies);
+        --_manager.activeEnemies;
         Destroy(gameObject);
+    }
+
+    IEnumerator ReduceActiveEnemies(GameManager _manager){
+        yield return new WaitForSeconds(1);
     }
     
     /*
@@ -113,5 +121,60 @@ public class Enemy : MonoBehaviour
         }
         
         enemyData.speed = 1.5f;
+    }
+    
+    
+    /*
+     * Parses an enemy object and extracts all gameplay data from it.
+     * Required return values: maxHealth, goldValue, itemDrop
+     * Possible return values: isFlying, isHealer, resistances, vulnerabilities 
+     */
+    public List<string> parseEnemyDataToString(){
+        List<string> enemyDataStrings = new List<string>();
+
+        enemyDataStrings.Add("Max Health:" + enemyData.maxHealth);
+        enemyDataStrings.Add("Awards " + enemyData.goldValue + " gold when killed");
+        enemyDataStrings.Add("Can award 1 " + StringLiterals.monsterDropToString(enemyData.drops) + " when killed");
+
+        if (enemyData.isFlying){
+            enemyDataStrings.Add("[B]Flyer");
+        }
+
+        if (enemyData.isHealer){
+            if (enemyData.healing == HealingValue.FlatValue){
+                enemyDataStrings.Add("[B]Heals " + enemyData.healingFlatValue + " health of nearby enemies every " + enemyData.healingCooldown + " seconds");
+            }
+            else if(enemyData.healing == HealingValue.Percentage){
+                enemyDataStrings.Add("[B]Heals " + enemyData.healingPercentage + "% of nearby enemies health every " + enemyData.healingCooldown + " seconds");
+            }
+        }
+
+        if (enemyData.hasResistanceToDamageTypes){
+            string temp = "[B]Has resistance to ";
+
+            foreach (DamageTypes damageType in enemyData.enemyResistances){
+                temp += StringLiterals.DamageTypeToString(damageType) + ", ";
+            }
+
+            temp = temp.Substring(0, temp.Length - 2);
+            temp += " damage";
+            
+            enemyDataStrings.Add(temp);
+        }
+        
+        if (enemyData.hasVulnerabilityToDamageTypes){
+            string temp = "[B]Is vulnerable to ";
+
+            foreach (DamageTypes damageType in enemyData.enemyVulnerabilities){
+                temp += StringLiterals.DamageTypeToString(damageType) + ", ";
+            }
+
+            temp = temp.Substring(0, temp.Length - 2);
+            temp += " damage";
+            
+            enemyDataStrings.Add(temp);
+        }
+        
+        return enemyDataStrings;
     }
 }

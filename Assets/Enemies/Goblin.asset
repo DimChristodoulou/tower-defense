@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   name: Goblin
+  description: The standard unit of the enemy army, a goblin can withstand a few
+    hits.
   itemDrop: Goblin Ear
   drops: 1
   maxHealth: 10
