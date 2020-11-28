@@ -10,27 +10,24 @@ using System.Collections.Generic;
 using Enemies;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour{
     public List<TowerData> TowerInformation;
-    public int gold;
+    public int gold, life = 10, _selectedTowerIndex = -1, activeEnemies = 0;
     private const int GOLD_PER_SECOND = 2;
-    public int life = 10;
     public TextMeshProUGUI lifeText, goldText;
-    private GameObject _lossMenu, _winMenu;
-    private GameObject _killedEnemiesPanel;
     private Dictionary<EnemyScriptableObject, int> _killedEnemies = new Dictionary<EnemyScriptableObject, int>();
-    private int _selectedTowerIndex = -1;
-    private bool _isTowerSelected = false;
-    private bool _won = false;
+    private bool _isTowerSelected = false, _won = false;
     private PlayerProgress playerProgress;
-    private GameObject _tutorialPanelIncomingEnemies, _tutorialPanelBuildMenu, _tutorialPanelEnemyDetails, _tutorialPanelStartEnemyWave;
+    
+    [SerializeField] private GameObject _tutorialPanelIncomingEnemies, _tutorialPanelBuildMenu, 
+        _tutorialPanelEnemyDetails, _tutorialPanelStartEnemyWave, _killedEnemiesPanel, _lossMenu, _winMenu;
 
-    public int activeEnemies = 0;
-
-    public List<UpgradeScriptableObject> allUpgrades;
+    private IList<UpgradeScriptableObject> allUpgrades = new List<UpgradeScriptableObject>();
 
     /*
      * Access Methods
@@ -60,47 +57,31 @@ public class GameManager : MonoBehaviour{
      */
 
     private void Awake(){
+        _tutorialPanelBuildMenu.SetActive(false);
+        _tutorialPanelIncomingEnemies.SetActive(false);
+        _tutorialPanelEnemyDetails.SetActive(false);
+        _tutorialPanelStartEnemyWave.SetActive(false);
+        _killedEnemiesPanel.SetActive(false);
+        _lossMenu.SetActive(false);
+        _winMenu.SetActive(false);
+        
+        //Load all upgrades to have them available in order to check which are unlocked
+        Addressables.LoadAssetsAsync<UpgradeScriptableObject>("Upgrades", null).Completed +=
+            delegate(AsyncOperationHandle<IList<UpgradeScriptableObject>> handle) { allUpgrades = handle.Result; };
+        
         activeEnemies = 0;
     }
 
     private void Start(){
+        lifeText.text = life.ToString();
 
-        _lossMenu = GameObject.Find("LossMenu");
-        _winMenu = GameObject.Find("WinMenu");
-        _killedEnemiesPanel = GameObject.Find("KilledEnemiesPanel");
-        
-        _tutorialPanelBuildMenu = GameObject.Find("BuildingPanelTutorial");
-        _tutorialPanelBuildMenu.SetActive(false);
-        
-        _tutorialPanelIncomingEnemies = GameObject.Find("IncomingEnemiesTutorial");
-        _tutorialPanelIncomingEnemies.SetActive(false);
-        
-        _tutorialPanelEnemyDetails = GameObject.Find("EnemyDetailsPanelTutorial");
-        _tutorialPanelEnemyDetails.SetActive(false);
-        
-        _tutorialPanelStartEnemyWave = GameObject.Find("StartWaveEarlyTutorial");
-        _tutorialPanelStartEnemyWave.SetActive(false);
-        
-        _killedEnemiesPanel.SetActive(false);
-        _lossMenu.SetActive(false);
-        _winMenu.SetActive(false);
-        lifeText.text = "Lives: " + life;
-
-        //Load all upgrades into the Global Player Progress class
+        //Load the player progress in the GlobalPlayerProgress class
         playerProgress = new PlayerProgress();
         playerProgress = playerProgress.loadProgress();
-        
-        foreach (UpgradeScriptableObject upgrade in allUpgrades){
-            
-            foreach (int unlockedUpgrade in playerProgress.UnlockedUpgrades){
-                if (upgrade.id == unlockedUpgrade){
-                    GlobalPlayerProgress.UnlockedUpgrades.Add(upgrade);
-                }
-            }
-        }
 
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level_0" || !playerProgress.passedTutorial){
-            playerProgress.passedTutorial = true;
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level_0" && !GlobalPlayerProgress.passedTutorial){
+            Time.timeScale = 0f;
+            GlobalPlayerProgress.passedTutorial = true;
             StartCoroutine(playTutorial());
         }
         
@@ -123,11 +104,6 @@ public class GameManager : MonoBehaviour{
             _killedEnemiesPanel.SetActive(true);
             updateKilledEnemiesPanel(_killedEnemiesPanel);
 
-            foreach (var drops in GlobalPlayerProgress.playerDrops){
-                Debug.Log(drops.Key);
-                Debug.Log(drops.Value);
-            }
-            
             // If player won, we need to update his wallet with the new drops and unlock the next level
             foreach (var killedEnemy in _killedEnemies){
                 if (GlobalPlayerProgress.playerDrops.ContainsKey(killedEnemy.Key.drops)){
@@ -154,20 +130,16 @@ public class GameManager : MonoBehaviour{
             return;
 
         if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["buildArrowTowerBinding"]) && TowerInformation[0].cost < gold){
-            _isTowerSelected = true;
-            _selectedTowerIndex = 0;
+            SelectTower(TowerData.ARROW_TOWER);
         }
         else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["buildArcaneTowerBinding"]) && TowerInformation[1].cost < gold){
-            _isTowerSelected = true;
-            _selectedTowerIndex = 1;
+            SelectTower(TowerData.ARCANE_TOWER);
         }
         else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["buildSupportTowerBinding"]) && TowerInformation[2].cost < gold){
-            _isTowerSelected = true;
-            _selectedTowerIndex = 2;
+            SelectTower(TowerData.SUPPORT_TOWER);
         }
         else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["buildEarthquakeTowerBinding"]) && TowerInformation[3].cost < gold){
-            _isTowerSelected = true;
-            _selectedTowerIndex = 3;
+            SelectTower(TowerData.EARTHQUAKE_TOWER);
         }
         else if (Input.GetKeyDown(gameObject.GetComponent<Settings>().keyBindings["speedx1"])){
             Time.timeScale = 1f;
@@ -181,23 +153,23 @@ public class GameManager : MonoBehaviour{
     }
 
     public void AddGoldPerSecond(){
-        gold += 2;
-        goldText.text = "GOLD: " + gold;
+        gold += GOLD_PER_SECOND;
+        goldText.text = gold.ToString();
     }
 
     public void RemoveGold(int value){
         gold -= value;
-        goldText.text = "GOLD: " + gold;
+        goldText.text = gold.ToString();
     }
 
     public void AddGold(int value){
         gold += value;
-        goldText.text = "GOLD: " + gold;
+        goldText.text = gold.ToString();
     }
 
     public void LoseLife(){
         --life;
-        lifeText.text = "Lives: " + life;
+        lifeText.text = life.ToString();
 
         if (life == 0){
             Time.timeScale = 0.0f;
@@ -220,18 +192,7 @@ public class GameManager : MonoBehaviour{
             foreach (GameObject dropText in dropTexts){
                 if (dropText.name == killedEnemy.Key.itemDrop + " Text"){
                     dropText.SetActive(true);
-                    int num;
-            
-                    if (killedEnemy.Value == 1){
-                        num = killedEnemy.Value;
-                        string str = num + " " + killedEnemy.Key.itemDrop;
-                        dropText.GetComponent<TextMeshProUGUI>().text = str;
-                    }
-                    else if (killedEnemy.Value > 1){
-                        num = killedEnemy.Value;
-                        string str = num + " " + killedEnemy.Key.itemDrop + "s";
-                        dropText.GetComponent<TextMeshProUGUI>().text = str;
-                    }
+                    dropText.GetComponent<TextMeshProUGUI>().text = Tools.ReturnIntAsSingularOrPlural(killedEnemy.Value, killedEnemy.Key.itemDrop);
                 }
             }
         }
@@ -247,6 +208,11 @@ public class GameManager : MonoBehaviour{
 
     public void RestartLevel(){
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+
+    private void SelectTower(int index){
+        _isTowerSelected = true;
+        _selectedTowerIndex = index;
     }
 
 

@@ -7,9 +7,7 @@
 using System.Collections.Generic;
 
 public static class StringLiterals{
-    public const string LifeText = "Lives: ";
-    public const string GoldText = "Gold: ";
-    
+
     /*
      * Enemy Drops Strings
      */
@@ -54,47 +52,5 @@ public static class StringLiterals{
         "Minotaur Horn"
     };
 
-    public static string monsterDropToString(singularItemDrops drop){
-        switch (drop){
-            case singularItemDrops.WarTurtleDrop:
-                return WarTurtleDrop;
-            case singularItemDrops.GoblinDrop:
-                return GoblinDrop;
-            case singularItemDrops.SpiderDrop:
-                return SpiderDrop;
-            case singularItemDrops.WaspDrop:
-                return WaspDrop;
-            case singularItemDrops.CultistDrop:
-                return CultistDrop;
-            case singularItemDrops.SkeletonDrop:
-                return SkeletonDrop;
-            case singularItemDrops.MinotaurDrop:
-                return MinotaurDrop;
-            default:
-                return null;
-        }
-    }
-    
-    public static string DamageTypeToString(DamageTypes type){
-        switch (type){
-            case DamageTypes.Piercing:
-                return Piercing;
-            case DamageTypes.Slashing:
-                return Slashing;
-            case DamageTypes.Bludgeoning:
-                return Bludgeoning;
-            case DamageTypes.Nature:
-                return Nature;
-            case DamageTypes.Fire:
-                return Fire;
-            case DamageTypes.Cold:
-                return Cold;
-            case DamageTypes.Arcane:
-                return Arcane;
-            case DamageTypes.Electric:
-                return Electric;
-            default:
-                return null;
-        }
-    }
+    public static string WaveCountdownText = "Time until next wave:";
 }

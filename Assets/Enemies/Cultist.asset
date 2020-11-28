@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   name: Cultist
-  description: Cultist use potent healing spells to restore nearby enemies' health.
+  description: Cultists use potent healing spells to restore nearby enemies' health.
   itemDrop: Cultist Mana Essence
   drops: 4
   maxHealth: 40
@@ -27,3 +27,7 @@ MonoBehaviour:
   healingPercentage: 0.5
   healingCooldown: 2
   healingRange: 5
+  hasVulnerabilityToDamageTypes: 0
+  enemyVulnerabilities: 
+  hasResistanceToDamageTypes: 1
+  enemyResistances: 00000000

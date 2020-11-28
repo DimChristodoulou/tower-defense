@@ -14,6 +14,56 @@ using UnityEngine;
 [Serializable]
 public class UpgradeScriptableObject : SerializedScriptableObject
 {
+    [Serializable]
+    public class StatEffect {
+    
+        #region upgrade_effect_group
+
+        [Button]
+        [FoldoutGroup("Which stat(s) does the upgrade affect?")] 
+        [GUIColor(0.3f, 0.8f, 0.8f, 1f)]
+        private void Damage() => affects = (UpgradeEffect.Damage);
+
+        [Button]
+        [FoldoutGroup("Which stat(s) does the upgrade affect?")] 
+        [GUIColor(0.8f, 0.3f, 0.8f, 1f)]
+        private void Range() => affects = (UpgradeEffect.Range);
+    
+        [Button]
+        [FoldoutGroup("Which stat(s) does the upgrade affect?")] 
+        [GUIColor(0.8f, 0.8f, 0.3f, 1f)]
+        private void FiringRate() => affects = (UpgradeEffect.FiringRate);
+    
+        [Button]
+        [FoldoutGroup("Which stat(s) does the upgrade affect?")] 
+        [GUIColor(0.4f, 0.4f, 0.8f, 1f)]
+        private void Cost() => affects = (UpgradeEffect.Cost);
+    
+        [Button]
+        [FoldoutGroup("Which stat(s) does the upgrade affect?")] 
+        [GUIColor(0.2f, 0.6f, 0.8f, 1f)]
+        private void Other() => affects = (UpgradeEffect.Other);
+
+        [ReadOnly] [FoldoutGroup("Which stat(s) does the upgrade affect?")] 
+        public UpgradeEffect affects;
+
+        #endregion
+    
+        #region upgrade_value
+
+        [HideIf("@this.affects == UpgradeEffect.Other")]
+        [FoldoutGroup("How does the upgrade affect the stat(s)?")]
+        [EnumToggleButtons]
+        public NumericalValue valueType;
+
+        [HideIf("@this.affects == UpgradeEffect.Other")]
+        [FoldoutGroup("How does the upgrade affect the stat(s)?")]
+        public float upgradeValue;
+
+        #endregion
+    
+    }
+    
     public enum ConditionType {Buff, Debuff}
     public enum UpgradeEffect {Damage, Range, FiringRate, Cost, Other}
     public enum NumericalValue {FlatValue, Percentage}
@@ -62,52 +112,9 @@ public class UpgradeScriptableObject : SerializedScriptableObject
 
     #endregion
 
-    #region upgrade_effect_group
+    [SerializeField]
+    public List<StatEffect> upgradeEffects;
 
-    [Button]
-    [FoldoutGroup("Which stat does the upgrade affect?")] 
-    [GUIColor(0.3f, 0.8f, 0.8f, 1f)]
-    private void Damage() => affects = UpgradeEffect.Damage;
-
-    [Button]
-    [FoldoutGroup("Which stat does the upgrade affect?")] 
-    [GUIColor(0.8f, 0.3f, 0.8f, 1f)]
-    private void Range() => affects = UpgradeEffect.Range;
-    
-    [Button]
-    [FoldoutGroup("Which stat does the upgrade affect?")] 
-    [GUIColor(0.8f, 0.8f, 0.3f, 1f)]
-    private void FiringRate() => affects = UpgradeEffect.FiringRate;
-    
-    [Button]
-    [FoldoutGroup("Which stat does the upgrade affect?")] 
-    [GUIColor(0.4f, 0.4f, 0.8f, 1f)]
-    private void Cost() => affects = UpgradeEffect.Cost;
-    
-    [Button]
-    [FoldoutGroup("Which stat does the upgrade affect?")] 
-    [GUIColor(0.2f, 0.6f, 0.8f, 1f)]
-    private void Other() => affects = UpgradeEffect.Other;
-
-    [ReadOnly] [FoldoutGroup("Which stat does the upgrade affect?")] 
-    public UpgradeEffect affects;
-
-    #endregion
-
-    #region upgrade_value
-
-    [HideIf("@this.affects == UpgradeEffect.Other")]
-    [FoldoutGroup("How does the upgrade affect the stat?")]
-    [EnumToggleButtons]
-    public NumericalValue valueType;
-
-    [HideIf("@this.affects == UpgradeEffect.Other")]
-    [FoldoutGroup("How does the upgrade affect the stat?")]
-    public float upgradeValue;
-
-    #endregion
-
-    
     [FoldoutGroup("Does the upgrade affect a specific tower, enemy, all towers or all enemies?")]
     [EnumToggleButtons]
     public UpgradeSelection specificTowerOrEnemy;

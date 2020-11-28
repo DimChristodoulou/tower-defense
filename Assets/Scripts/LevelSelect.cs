@@ -25,6 +25,16 @@ public class LevelSelect : MonoBehaviour{
 
     private int _areaIndex, _levelIndex;
     private List<int> unlockedLevels;
+    private GameObject _uiCanvas;
+    private GameObject _loadingScreen;
+    private GameObject _loadingBar;
+
+    private void Awake(){
+        _uiCanvas = GameObject.Find("Canvas");
+        _loadingBar = GameObject.Find("LoadingBar");
+        _loadingScreen = GameObject.Find("LoadingScreen");
+        _loadingScreen.SetActive(false);
+    }
     
     // Start is called before the first frame update
     void Start(){
@@ -103,8 +113,11 @@ public class LevelSelect : MonoBehaviour{
     }
 
     public void selectLevel(int levelId){
-        //Scene manager load
+        //Custom Scene manager load w/ loading screen
+        _uiCanvas.SetActive(false);
+        _loadingScreen.SetActive(true);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Level_"+levelId);
+        //StartCoroutine(SceneManager.SceneAsynchronousLoad("Level_"+levelId, _loadingBar));
     }
 
     public void toggleUpgradePanel(){

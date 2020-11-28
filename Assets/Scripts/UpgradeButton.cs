@@ -48,7 +48,7 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler, IEventSystemHa
         costText.text = "";
         
         foreach (KeyValuePair<StringLiterals.singularItemDrops, int> cost in upgrade.costs){
-            costText.text += cost.Value + " " + StringLiterals.monsterDropToString(cost.Key) + "\n";
+            costText.text += cost.Value + " " + Tools.monsterDropToString(cost.Key) + "\n";
         }
         
         bool canPurchase = isUpgradePurchasable();

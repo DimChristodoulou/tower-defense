@@ -16,9 +16,16 @@ MonoBehaviour:
   endlessPossibleEnemies: []
   waves:
   - enemySpawnInterval: 1.5
-    waveSpawn: 30
+    waveSpawn: 10
     EnemiesList:
     - {fileID: 2680536106917734335, guid: 06135d323efd92048963d2b343656235, type: 3}
     waveSpawnType: 2
     enemiesWeightOrNumber: 0a000000
     waveEnemyCount: 15
+  - enemySpawnInterval: 0.5
+    waveSpawn: 20
+    EnemiesList:
+    - {fileID: 2680536106917734335, guid: 06135d323efd92048963d2b343656235, type: 3}
+    waveSpawnType: 2
+    enemiesWeightOrNumber: 28000000
+    waveEnemyCount: 0

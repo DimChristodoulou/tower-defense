@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 6914484073087371465}
+  entireHealthBar: {fileID: 6914484072317196092}
   enemyData: {fileID: 0}
 --- !u!114 &8941653536323070635
 MonoBehaviour:
@@ -127,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6914484072317196093
 RectTransform:
   m_ObjectHideFlags: 0

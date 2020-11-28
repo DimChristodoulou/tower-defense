@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6678109894915813617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6678109894915813622}
+  - component: {fileID: 6678109894915813621}
+  - component: {fileID: 6678109894915813620}
+  - component: {fileID: 6678109894915813619}
+  - component: {fileID: 6678109894915813618}
+  - component: {fileID: 6678109894915813623}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6678109894915813622
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6678109894915813617}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6678109894915813621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6678109894915813617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4564b7a42d28ba74b9e1a439703f1ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TowerInformation:
+  - {fileID: 11400000, guid: 3f8d26de454501a40b09cab29301a564, type: 2}
+  - {fileID: 11400000, guid: 8d8c1eaa9a975a14fa0b605892b938b2, type: 2}
+  - {fileID: 11400000, guid: 41b7f5a48aef3ad47a3cbfbcb2a93b69, type: 2}
+  - {fileID: 11400000, guid: bf45bbb9894f9c748abeee601e267f04, type: 2}
+  gold: 350
+  life: 10
+  lifeText: {fileID: 0}
+  goldText: {fileID: 0}
+  _tutorialPanelIncomingEnemies: {fileID: 0}
+  _tutorialPanelBuildMenu: {fileID: 0}
+  _tutorialPanelEnemyDetails: {fileID: 0}
+  _tutorialPanelStartEnemyWave: {fileID: 0}
+  _killedEnemiesPanel: {fileID: 0}
+  _lossMenu: {fileID: 0}
+  _winMenu: {fileID: 0}
+  activeEnemies: 0
+--- !u!114 &6678109894915813620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6678109894915813617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c6bb40c7099884abfa9c447b8d98f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forbiddenBindings: 
+  isPaused: 0
+--- !u!114 &6678109894915813619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6678109894915813617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1130443d1b999704aa37df98a8430239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveManager: {fileID: 11400000, guid: 311b9ea787f352b4eac9d9ae06ed3d34, type: 2}
+  waveNumberText: {fileID: 0}
+  incomingEnemiesPanel: {fileID: 0}
+--- !u!114 &6678109894915813618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6678109894915813617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c06d7ff1a90c2ab4db61dafe1001682b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &6678109894915813623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6678109894915813617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c3442dc5190a46a044f2cb8f6d4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

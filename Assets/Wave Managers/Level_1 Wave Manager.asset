@@ -30,3 +30,10 @@ MonoBehaviour:
     waveSpawnType: 2
     enemiesWeightOrNumber: 19000000
     waveEnemyCount: 11
+  - enemySpawnInterval: 0.75
+    waveSpawn: 60
+    EnemiesList:
+    - {fileID: 8198794352431694409, guid: 28b02000bf47c2b48ba4edbc66660091, type: 3}
+    waveSpawnType: 2
+    enemiesWeightOrNumber: 1e000000
+    waveEnemyCount: 0

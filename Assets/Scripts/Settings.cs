@@ -35,7 +35,7 @@ public class Settings : MonoBehaviour{
         }
     };
     
-    public List<KeyCode> forbiddenBindings = new List<KeyCode>(){
+    private List<KeyCode> forbiddenBindings = new List<KeyCode>(){
         KeyCode.Escape,
         KeyCode.Tab,
         KeyCode.LeftShift,

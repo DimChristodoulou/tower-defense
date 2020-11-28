@@ -17,30 +17,56 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 1a7033f95f1575242a91e4770ce21b7f
   m_SerializeEntries:
+  - m_GUID: 21250f4c7c4506641a35bef30371cc0b
+    m_Address: Upgrade_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Upgrades
   - m_GUID: 295f905d6d3fac74dacee2c733da76d2
     m_Address: Upgrade_2
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Upgrades
+  - m_GUID: 59df42dca5374334889d8798c333f6d4
+    m_Address: Upgrade_7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Upgrades
   - m_GUID: 5df7c234af8cb174396a3b28b76d3287
     m_Address: Upgrade_1
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Upgrades
+  - m_GUID: 6532c22c0df188a4b97b3da38b65ad2e
+    m_Address: Upgrade_9
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Upgrades
   - m_GUID: 85e132a108aee024da0ce466aecc4193
     m_Address: Upgrade_4
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Upgrades
   - m_GUID: 93db5083ca0378449acbc62e153c7398
     m_Address: Upgrade_3
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Upgrades
   - m_GUID: ad83b31f2acb8d84eb93d70b80975618
     m_Address: Upgrade_0
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Upgrades
   - m_GUID: ba9e44ee51460d340b5e71dbf3238d6c
     m_Address: Upgrade_5
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Upgrades
+  - m_GUID: bd80ce2f28755db4494b1f0016208bfc
+    m_Address: Upgrade_8
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Upgrades
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1b8254426e91a7345bc7c2eb41815832, type: 2}
   m_SchemaSet:
