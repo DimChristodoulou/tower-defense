@@ -17,12 +17,24 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 1591d50c801b0bf4fb74cbafa5776307
   m_SerializeEntries:
+  - m_GUID: 1805625e25c29b442af6c71f7d52f1d1
+    m_Address: Assets/Wave Managers/Level_3 Wave Manager.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2d1d0946689f754499fe64231a74b979
+    m_Address: Assets/Wave Managers/Level_2 Wave Manager.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   - m_GUID: 311b9ea787f352b4eac9d9ae06ed3d34
     m_Address: Assets/Wave Managers/Level_0 Wave Manager.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 72b8b8d80df749b4b93b4a86441909ec
     m_Address: Assets/Wave Managers/Level_1 Wave Manager.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 86961a5b02dcd574d93913ac85a0bc45
+    m_Address: Assets/Wave Managers/Level_4 Wave Manager.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

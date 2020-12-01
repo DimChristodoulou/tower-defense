@@ -25,9 +25,9 @@ MonoBehaviour:
   healing: 0
   healingFlatValue: 2
   healingPercentage: 0.5
-  healingCooldown: 2
+  healingCooldown: 7.5
   healingRange: 5
   hasVulnerabilityToDamageTypes: 0
   enemyVulnerabilities: 
-  hasResistanceToDamageTypes: 1
+  hasResistanceToDamageTypes: 0
   enemyResistances: 00000000

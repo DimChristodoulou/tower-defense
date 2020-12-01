@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f130c6eabe98ba41842885f0a06a0bd, type: 3}
-  m_Name: 4 - Earthquake Tower Damage I
+  m_Name: 31 - Arcane Tower Damage II
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -46,10 +46,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 0
+      Data: 1
     - Name: $v
       Entry: 3
-      Data: 300
+      Data: 50
     - Name: 
       Entry: 8
       Data: 
@@ -58,10 +58,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 3
+      Data: 0
     - Name: $v
       Entry: 3
-      Data: 50
+      Data: 200
     - Name: 
       Entry: 8
       Data: 
@@ -71,19 +71,23 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: 4
-  name: Earthquake Tower Damage I
+  id: 31
+  name: Arcane Tower Damage II
   isUnlocked: 0
-  UpgradeIcon: {fileID: 21300000, guid: 9051db522b64c9c4bb8cfe73be7a7dfb, type: 3}
-  description: Your Earthquake Towers deal 5% more damage
-  flavourDescription: 
-  hasPrerequisites: 0
-  prerequisites: []
+  UpgradeIcon: {fileID: 21300000, guid: ab36a0ee0d061844eb7960d31ac32734, type: 3}
+  description: Your Arcane Towers deal 5% more damage
+  flavourDescription: The tower's wizards have learnt more powerful sorceries...
+  hasPrerequisites: 1
+  prerequisites:
+  - {fileID: 11400000, guid: bb07d23aaf5828c4a8f7c1c326e58d0d, type: 2}
   isMutuallyExclusiveWithOtherSkills: 0
   mutuallyExclusiveSkills: []
   isBuffOrDebuff: 0
-  upgradeEffects: []
+  upgradeEffects:
+  - affects: 0
+    valueType: 1
+    upgradeValue: 0.05
   specificTowerOrEnemy: 0
   affectedTowers:
-  - {fileID: 11400000, guid: bf45bbb9894f9c748abeee601e267f04, type: 2}
+  - {fileID: 11400000, guid: 8d8c1eaa9a975a14fa0b605892b938b2, type: 2}
   affectedEnemies: []

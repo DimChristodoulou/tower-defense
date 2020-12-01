@@ -16,55 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 8568c23d022183448972d18e31d3d256
-  m_SerializeEntries:
-  - m_GUID: 19d003b48a2af2e439b357798fced446
-    m_Address: Upgrade_18
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 35678388ca4901243a1ebcce59e9f966
-    m_Address: Upgrade_13
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 3ac99d5227fe6b143b808b06025ee15b
-    m_Address: Upgrade_14
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 439e2440435a1494591c65fdb501e2d1
-    m_Address: Upgrade_20
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 64c7aab62fbbe2246b749a435fbfa22c
-    m_Address: Upgrade_19
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 68767261fe8eb5341adb20559392841f
-    m_Address: Upgrade_15
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 7e74554a0bc93eb4eb2484efd4c6c35a
-    m_Address: Upgrade_17
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: a781ae706ac8b5f46bd2f89c2fadad0e
-    m_Address: Upgrade_16
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: ac72e1c2ad4874d44a63cd79f17e51ae
-    m_Address: Upgrade_11
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: b783d0dfdcaafa043abcf3359234cee3
-    m_Address: Upgrade_12
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: bc9075244f2441e4e956f79eb9bb7bac
-    m_Address: Upgrade_21
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: d726f7cded387104bb22fcaf27cdb63e
-    m_Address: Upgrade_10
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1b8254426e91a7345bc7c2eb41815832, type: 2}
   m_SchemaSet:

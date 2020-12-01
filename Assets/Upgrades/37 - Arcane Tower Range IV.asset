@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f130c6eabe98ba41842885f0a06a0bd, type: 3}
+  m_Name: 37 - Arcane Tower Range IV
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: costs
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[StringLiterals+singularItemDrops,
+        Assembly-CSharp],[System.Int32, mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[StringLiterals+singularItemDrops,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 3
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 3
+      Data: 200
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  id: 37
+  name: Arcane Tower Range IV
+  isUnlocked: 0
+  UpgradeIcon: {fileID: 21300000, guid: 364bab88c70f4de4e934a8ed1bfe6efd, type: 3}
+  description: Your Arcane Towers have 5% more range
+  flavourDescription: The tower's wizards have learnt more powerful sorceries...
+  hasPrerequisites: 1
+  prerequisites:
+  - {fileID: 11400000, guid: 0a18256ddca422944b2813f7a48a7deb, type: 2}
+  isMutuallyExclusiveWithOtherSkills: 0
+  mutuallyExclusiveSkills: []
+  isBuffOrDebuff: 0
+  upgradeEffects:
+  - affects: 1
+    valueType: 1
+    upgradeValue: 0.05
+  specificTowerOrEnemy: 0
+  affectedTowers:
+  - {fileID: 11400000, guid: 8d8c1eaa9a975a14fa0b605892b938b2, type: 2}
+  affectedEnemies: []

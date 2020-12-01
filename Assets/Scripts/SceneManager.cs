@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,6 +20,17 @@ public class SceneManager : MonoBehaviour{
     }
 
     public void NewGame(){
+        _uiCanvas.SetActive(false);
+        _loadingScreen.SetActive(true);
+
+        if (File.Exists(Application.persistentDataPath + "/unlocks.json")){
+            File.Delete(Application.persistentDataPath + "/unlocks.json");
+        }
+
+        StartCoroutine(SceneAsynchronousLoad("LevelSelect", _loadingBar));
+    }
+
+    public void Continue(){
         _uiCanvas.SetActive(false);
         _loadingScreen.SetActive(true);
         StartCoroutine(SceneAsynchronousLoad("LevelSelect", _loadingBar));
